@@ -3,8 +3,8 @@ Contributors: Shane & Peter, Inc.
 Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple
 Requires at least: 2.0
-Tested up to: 2.6
-stable tag: 1.0
+Tested up to: 2.7.1
+Stable tag: 2.0
 
 Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
 
@@ -12,8 +12,6 @@ Simple image widget.  Allows for placement of an image in the sidebar without re
 Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
 
 todo:
-* support multiple instances
-* encapsulate code in an object
 * support image sizing (maybe)
 
 == Installation ==
@@ -32,3 +30,14 @@ todo:
 1. Go to Manage > Image Widget to add a title, link, and image.
 
 If you find any bugs or have any ideas, please mail us.
+
+== Changelog ==
+
+New in version 2.0
+* Multi widget support
+* WP 2.7.1 Compatibility
+* Class encapsulation
+
+== Screenshots ==
+
+1. Image administration screen
