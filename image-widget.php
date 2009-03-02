@@ -5,7 +5,7 @@ Plugin Name: Image Widget
 Plugin URI: http://www.shaneandpeter.com/wordpress
 Description: This widget accepts a title, a link and an image and displays them.  The admin panel is separated from the widget to offer independant control
 Author: Shane and Peter, Inc. [Contributors: Kevin Miller, Nick Ohrn]
-Version: 2.0
+Version: 2.1
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -24,6 +24,7 @@ class sp_image_widget {
 		'default_widget_options' => array(
 			'title' => '',
 			'link' => '',
+			'linktarget' => '',
 			'description' => '',
 			'image' => ''
 		),
@@ -102,6 +103,7 @@ class sp_image_widget {
 
 
 		$link = !empty($widget_options['link']);
+		$linktarget = !empty($widget_options['linktarget']);
 		
  		echo '<div id="'.$this->options['control_options']['id_base'].'-'.$number.'" class="widget '.$this->options['widget_options']['classname'].'">';
 		?>
@@ -119,14 +121,14 @@ class sp_image_widget {
 				
 				<?php if (!empty($widget_options['image'])): ?>
 
-  				 <?= ($link ? '<a class="' . $this->options['widget_options']['classname'] . '-image-link" href="' . $widget_options['link'] . '">'   : '') . '<img class="' . $this->options['widget_options']['classname'] . '-image" src="' . $widget_options['image'] . '" alt="image widget" />' . ($link ? '</a>' : '') ?>
+  				 <?= ($link ? '<a class="' . $this->options['widget_options']['classname'] . '-image-link" href="' . $widget_options['link'] . '" target="' . $widget_options['linktarget'] . '">'   : '') . '<img class="' . $this->options['widget_options']['classname'] . '-image" src="' . $widget_options['image'] . '" alt="image widget" />' . ($link ? '</a>' : '') ?>
 						
 				<?php endif; ?>
 				
 				<?php if (!empty($widget_options['description'])): ?>
 					
 					<p class="<?= $this->options['widget_options']['classname'] ?>-description" >
-					<?= ($link ? '<a class="' . $this->options['widget_options']['classname'] . '-image-link-p" href="' . $widget_options['link'] . '">' : '')?>
+					<?= ($link ? '<a class="' . $this->options['widget_options']['classname'] . '-image-link-p" href="' . $widget_options['link'] . '" target="' . $widget_options['linktarget'] . '">' : '')?>
 						<?= html_entity_decode($widget_options['description']) ?>
 					<?= ($link ? '</a>' : '') ?></p>
 						
@@ -255,6 +257,8 @@ class sp_image_widget {
 					$new_options['title'] = htmlentities(stripslashes($new_options['title']));
 
 					$new_options['link'] = htmlentities(stripslashes($_POST[$this->options['control_options']['id_base'] . '-link']));
+
+					$new_options['linktarget'] = htmlentities(stripslashes($_POST[$this->options['control_options']['id_base'] . '-linktarget']));
 
 					$new_options['description'] = $_POST[$this->options['control_options']['id_base'] . '-description'];
 					$new_options['description'] = ereg_replace("[^A-Za-z0-9 _!-@#$%^&*()_+={}\":<>?/.,;'|\\~`]", "", $new_options['description']);
@@ -424,6 +428,10 @@ class sp_image_widget {
 								</th>
 								<td>
 									<input type="text" id="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][link]" name="<?= $this->options['control_options']['id_base'] ?>-link" value="<?= $form_options['link'] ?>" >
+									<select id="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][linktarget]" name="<?= $this->options['control_options']['id_base'] ?>-linktarget">
+										<option value="_self"<?php if ($form_options['linktarget']=="_self") { echo " selected"; } ?>>Same Window</option>
+										<option value="_blank"<?php if ($form_options['linktarget']=="_blank") { echo " selected"; } ?>>New Window</option>
+									</select>
 								</td>
 							</tr>
 					

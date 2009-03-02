@@ -4,7 +4,7 @@ Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple
 Requires at least: 2.0
 Tested up to: 2.7.1
-Stable tag: 2.0
+Stable tag: 2.1
 
 Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
 
@@ -33,7 +33,12 @@ If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
 
+New in version 2.1
+
+* Link Target
+
 New in version 2.0
+
 * Multi widget support
 * WP 2.7.1 Compatibility
 * Class encapsulation
