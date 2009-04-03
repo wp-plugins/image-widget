@@ -5,7 +5,7 @@ Plugin Name: Image Widget
 Plugin URI: http://www.shaneandpeter.com/wordpress
 Description: This widget accepts a title, a link and an image and displays them.  The admin panel is separated from the widget to offer independant control
 Author: Shane and Peter, Inc. [Contributors: Kevin Miller, Nick Ohrn]
-Version: 2.1
+Version: 2.2
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -37,6 +37,7 @@ class sp_image_widget {
 
 	var $is_widget_id = false;
 	
+	// Setup Widget
 	function sp_image_widget() {
 		
 		$this->is_admin_page = (isset($_GET['page']) && $_GET['page'] == $this->options['control_options']['id_base']) ? true : false;
@@ -46,6 +47,7 @@ class sp_image_widget {
 		add_action('admin_menu', array(&$this, 'admin_menu'));
 	}
 	
+	// Admin Header
 	function admin_head() {
 		
 		// TODO: Submit this as a patch to Wordpress
@@ -72,18 +74,23 @@ class sp_image_widget {
 		<?php
 	}
 	
+	// Admin Menu
 	function admin_menu() {
 		add_management_page($this->options['widget_name'], $this->options['widget_name'], 5, $this->options['control_options']['id_base'], array(&$this, 'control'));
 	}
 	
+	// Get Widget Options
 	function get_options() {
 		return get_option('widget_' . $this->options['control_options']['id_base']);
 	}
 	
+	// Set Widget Options
 	function update_options($options) {
 		return update_option('widget_' . $this->options['control_options']['id_base'], $options);
 	}
 	
+
+	// Display Widget Output
 	function widget($arguments, $widget_arguments = 1) {
 		
 		extract($arguments, EXTR_SKIP);
@@ -106,41 +113,51 @@ class sp_image_widget {
 		$linktarget = !empty($widget_options['linktarget']);
 		
  		echo '<div id="'.$this->options['control_options']['id_base'].'-'.$number.'" class="widget '.$this->options['widget_options']['classname'].'">';
-		?>
-		<?php //echo $before_title; ?>
-
-				<?php if (!empty($widget_options['title'])): ?>
-						
-						<?= $before_title ?>
-							
-						<?= $widget_options['title'] ?>
-						
-						<?= $after_title ?>
-						
-				<?php endif; ?>
-				
-				<?php if (!empty($widget_options['image'])): ?>
-
-  				 <?= ($link ? '<a class="' . $this->options['widget_options']['classname'] . '-image-link" href="' . $widget_options['link'] . '" target="' . $widget_options['linktarget'] . '">'   : '') . '<img class="' . $this->options['widget_options']['classname'] . '-image" src="' . $widget_options['image'] . '" alt="image widget" />' . ($link ? '</a>' : '') ?>
-						
-				<?php endif; ?>
-				
-				<?php if (!empty($widget_options['description'])): ?>
-					
-					<p class="<?= $this->options['widget_options']['classname'] ?>-description" >
-					<?= ($link ? '<a class="' . $this->options['widget_options']['classname'] . '-image-link-p" href="' . $widget_options['link'] . '" target="' . $widget_options['linktarget'] . '">' : '')?>
-						<?= html_entity_decode($widget_options['description']) ?>
-					<?= ($link ? '</a>' : '') ?></p>
-						
-				<?php endif; ?>
 		
-			<?= $after_widget ?>
-
-		<?php
 		
-	
+		if (!empty($widget_options['title'])) {
+			echo $before_title;
+			echo $widget_options['title'];
+			echo $after_title;
+		}
+		
+		if (!empty($widget_options['image'])) {	
+
+			if ($link) {
+				echo '<a class="' . $this->options['widget_options']['classname'] . '-image-link" href="' . $widget_options['link'] . '" target="' . $widget_options['linktarget'] . '">';
+			}
+
+			echo '<img class="' . $this->options['widget_options']['classname'] . '-image" src="' . $widget_options['image'] . '" alt="image widget" />';
+
+			if ($link) {
+				echo '</a>';
+			}
+
+		}
+		
+		if (!empty($widget_options['description'])) {
+		
+			echo '<p class="' . $this->options['widget_options']['classname'] . '-description" >';
+			if ($link) {
+				echo '<a class="' . $this->options['widget_options']['classname'] . '-image-link-p" href="' . $widget_options['link'] . '" target="' . $widget_options['linktarget'] . '">';
+			}
+			
+			echo html_entity_decode($widget_options['description']);
+			
+			if ($link) { echo '</a>'; }
+
+			echo "</p>";
+		
+		}
+		
+		echo $after_widget;
+		
+		echo "</div>\n";
+			
 	}
 
+
+	// Widget Registration
 	function register() {
 		
 		if (!$options = $this->get_options()) {
@@ -165,6 +182,7 @@ class sp_image_widget {
 	}
 
 
+	// Widget Controller
 	function control($widget_arguments = 1) {
 
 		global $wp_registered_sidebars, $wp_registered_widgets;
@@ -360,7 +378,7 @@ class sp_image_widget {
 			
 			<div class="wrap">
 		
-				<h2><?= $this->admin_menu_header ?></h2>
+				<h2><?php echo $this->admin_menu_header; ?></h2>
 	
 				<?php if (!$first_widget_id): ?>
 	
@@ -370,7 +388,7 @@ class sp_image_widget {
 		
 				<?php else: ?>
 					
-					<form name="form_<?= $this->options['control_options']['id_base'] ?>" method="post" action="<?= str_replace('%7E', '~', $_SERVER['REQUEST_URI']) ?>" enctype="multipart/form-data">
+					<form name="form_<?php echo $this->options['control_options']['id_base']; ?>" method="post" action="<?php echo str_replace('%7E', '~', $_SERVER['REQUEST_URI']); ?>" enctype="multipart/form-data">
 
 					<p>
 						Select which Image Widget you would like to edit.
@@ -380,19 +398,22 @@ class sp_image_widget {
 
 						<select id="sp_image_admin_dropdown" name="sp_image_admin_dropdown" style="width: 400px;" >
 						
-							<?php foreach ($dropdown as $_sidebar => $_info): ?>
+							<?php foreach ($dropdown as $_sidebar => $_info):
 							
-								<?php $_widget_count = 1; ?>
+								$_widget_count = 1;
 
-								<?php foreach ($dropdown[$_sidebar] as $_widget): ?>
+								foreach ($dropdown[$_sidebar] as $_widget):
 							
- 									<option value="<?= $_widget['id'].'&sidebar='.$_sidebar ?>" <?= ($_widget['selected'] ? ' SELECTED ' : '') ?>><?= $wp_registered_sidebars[$_sidebar]['name'] ?>&nbsp;&raquo;&nbsp;<?= $this->ordinalize($_widget_count) ?> widget</option>
+ 									
+ 									echo '<option value="' .  $_widget['id'] . '&sidebar=' . $_sidebar . '"';
+ 									if ($_widget['selected']) { echo ' SELECTED '; }
+ 									echo '>' . $wp_registered_sidebars[$_sidebar]['name'] . '&nbsp;&raquo;&nbsp;' . $this->ordinalize($_widget_count) . ' widget</option>';
 
-									<?php $_widget_count++; ?>
+									$_widget_count++;
 								
-								<?php endforeach; ?>
+								endforeach;
 
-							<?php endforeach; ?>
+							endforeach; ?>
 						
 						</select>
 					
@@ -402,7 +423,7 @@ class sp_image_widget {
 						    sp_image_admin_dropdown.onchange = function() {
 								    widget_num = sp_image_admin_dropdown.options[sp_image_admin_dropdown.selectedIndex].value.split('&'); 
 									if (widget_num[0] > 0) {
-  										location.href = '<?= get_option('home'); ?>/wp-admin/tools.php?page=<?= $this->options['control_options']['id_base'] ?>&widget_id=' + sp_image_admin_dropdown.options[sp_image_admin_dropdown.selectedIndex].value;
+  										location.href = '<?php echo get_option('home'); ?>/wp-admin/tools.php?page=<?php echo $this->options['control_options']['id_base']; ?>&widget_id=' + sp_image_admin_dropdown.options[sp_image_admin_dropdown.selectedIndex].value;
 									}
 						    }
 						/* ]]> */
@@ -415,20 +436,20 @@ class sp_image_widget {
 					
 							<tr>
 								<th>
-									<label for="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][title]"><?= _e('Title:') ?></label>
+									<label for="<?php echo $this->options['control_options']['id_base']; ?>[<?php echo $number; ?>][title]"><?php echo _e('Title:') ?></label>
 								</th>
 								<td>
-									<input type="text" id="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][title]" name="<?= $this->options['control_options']['id_base'] ?>-title" value="<?= $form_options['title'] ?>" />
+									<input type="text" id="<?php echo $this->options['control_options']['id_base']; ?>[<?php echo $number; ?>][title]" name="<?php echo $this->options['control_options']['id_base']; ?>-title" value="<?php echo $form_options['title']; ?>" />
 								</td>
 							</tr>
 					
 							<tr>
 								<th>
-									<label for="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][link]"><?= _e('Link:') ?></label>
+									<label for="<?php echo $this->options['control_options']['id_base']; ?>[<?php echo $number; ?>][link]"><?php echo _e('Link:'); ?></label>
 								</th>
 								<td>
-									<input type="text" id="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][link]" name="<?= $this->options['control_options']['id_base'] ?>-link" value="<?= $form_options['link'] ?>" >
-									<select id="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][linktarget]" name="<?= $this->options['control_options']['id_base'] ?>-linktarget">
+									<input type="text" id="<?php echo $this->options['control_options']['id_base']; ?>[<?php echo $number; ?>][link]" name="<?php echo $this->options['control_options']['id_base']; ?>-link" value="<?php echo $form_options['link']; ?>" >
+									<select id="<?php echo $this->options['control_options']['id_base']; ?>[<?php echo $number; ?>][linktarget]" name="<?php echo $this->options['control_options']['id_base']; ?>-linktarget">
 										<option value="_self"<?php if ($form_options['linktarget']=="_self") { echo " selected"; } ?>>Same Window</option>
 										<option value="_blank"<?php if ($form_options['linktarget']=="_blank") { echo " selected"; } ?>>New Window</option>
 									</select>
@@ -437,28 +458,28 @@ class sp_image_widget {
 					
 							<tr>
 								<th>
-									<label for="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][description]"><?= _e('Description:') ?></label>
+									<label for="<?php echo $this->options['control_options']['id_base']; ?>[<?php echo $number; ?>][description]"><?php echo _e('Description:'); ?></label>
 								</th>
 								<td>
-					 				<textarea type="text" id="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][description]" name="<?= $this->options['control_options']['id_base'] ?>-description"><?= $form_options['description'] ?></textarea>
+					 				<textarea type="text" id="<?php echo $this->options['control_options']['id_base']; ?>[<?php echo $number; ?>][description]" name="<?php echo $this->options['control_options']['id_base']; ?>-description"><?php echo  $form_options['description']; ?></textarea>
 								</td>
 							</tr>
 							<tr>
 								<th>
-									<label for="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][image]"><?= _e('Image:') ?></label>
+									<label for="<?php echo  $this->options['control_options']['id_base']; ?>[<?php echo  $number; ?>][image]"><?php echo  _e('Image:'); ?></label>
 								</th>
 								<td>
- 						 			<input type="file" id="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][image]"  name="<?= $this->options['control_options']['id_base'] ?>-image" />
+ 						 			<input type="file" id="<?php echo  $this->options['control_options']['id_base']; ?>[<?php echo  $number; ?>][image]"  name="<?php echo  $this->options['control_options']['id_base']; ?>-image" />
 								</td>
 							</tr>
 							
 							<tr>
 								<th>
-									<label><?= _e('Preview Image:') ?></label>
+									<label><?php echo  _e('Preview Image:'); ?></label>
 								</th>
 								<td>
 									<?php if ($form_options['image']): ?>
-										<img src="<?= $form_options['image'] ?>" border="0" />
+										<img src="<?php echo  $form_options['image']; ?>" border="0" />
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -467,10 +488,10 @@ class sp_image_widget {
 					</table>
 
 					<p class="submit">
-						<input type="submit" value="Save" id="<?= $this->options['control_options']['id_base'] ?>[<?= $number ?>][submit]"  name="<?= $this->options['control_options']['id_base'] ?>-submit" value="1" />
+						<input type="submit" value="Save" id="<?php echo  $this->options['control_options']['id_base']; ?>[<?php echo  $number; ?>][submit]"  name="<?php echo  $this->options['control_options']['id_base']; ?>-submit" value="1" />
 					</p>
 	
-					<?= wp_nonce_field($this->options['control_options']['id_base']) ?>
+					<?php echo  wp_nonce_field($this->options['control_options']['id_base']); ?>
 			
 				</form>
 	
@@ -484,8 +505,8 @@ class sp_image_widget {
 				<small>To edit the properties of this widget visit:
 				<br />
 				<?php if ($_GET['sidebar']) $_sidebar = $_GET['sidebar']; else $_sidebar = 'sidebar-1'; ?>
- 				Manage &raquo; <a href="../wp-admin/tools.php?page=<?= $this->options['control_options']['id_base'] ?>&widget_id=<?= $number ?>&sidebar=<?php echo $_sidebar; ?>"><?= $this->options['widget_name'] ?></a></small>
-				<input type="hidden" id="widget-sp_image-submit-<?= $number ?>" name="widget-sp_image[<?= $number ?>][submit]" value="1" />
+ 				Manage &raquo; <a href="../wp-admin/tools.php?page=<?php echo  $this->options['control_options']['id_base']; ?>&widget_id=<?php echo  $number; ?>&sidebar=<?php echo $_sidebar; ?>"><?php echo  $this->options['widget_name']; ?></a></small>
+				<input type="hidden" id="widget-sp_image-submit-<?php echo  $number; ?>" name="widget-sp_image[<?php echo  $number; ?>][submit]" value="1" />
 			</p>
 		
 		<?php
@@ -493,6 +514,8 @@ class sp_image_widget {
 	
 	}
 	
+	
+	// Widget Positioning Suffixes
 	function ordinalize($number) {
 		
 		if (in_array(($number % 100), range(11, 13))) {	

@@ -4,7 +4,7 @@ Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple
 Requires at least: 2.0
 Tested up to: 2.7.1
-Stable tag: 2.1
+Stable tag: 2.2
 
 Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
 
@@ -32,6 +32,11 @@ todo:
 If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
+
+New in version 2.2
+
+* Fixed missing DIV close tag (Thank you Jesper Goos)
+* Updated all short tags to proper php tags (Thank you Jonathan Volks from Mannix Marketing)
 
 New in version 2.1
 
