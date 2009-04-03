@@ -9,6 +9,14 @@ Version: 2.2
 Author URI: http://www.shaneandpeter.com
 */
 
+/*
+Feature Ideas
+
+* Settings in the widget editor that mirror the Editor view
+* Size setting in the widget editor
+
+*/
+
 class sp_image_widget {
 	
 	var $options = array(
