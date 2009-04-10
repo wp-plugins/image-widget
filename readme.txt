@@ -4,7 +4,7 @@ Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple
 Requires at least: 2.0
 Tested up to: 2.7.1
-Stable tag: 2.2
+Stable tag: 2.2.1
 
 Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
 
@@ -32,6 +32,10 @@ todo:
 If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
+
+New in version 2.2.1
+
+* Update <div> to be <li> (Thanks to Lois Turley)
 
 New in version 2.2
 

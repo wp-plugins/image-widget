@@ -5,7 +5,7 @@ Plugin Name: Image Widget
 Plugin URI: http://www.shaneandpeter.com/wordpress
 Description: This widget accepts a title, a link and an image and displays them.  The admin panel is separated from the widget to offer independant control
 Author: Shane and Peter, Inc. [Contributors: Kevin Miller, Nick Ohrn]
-Version: 2.2
+Version: 2.2.1
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -120,7 +120,7 @@ class sp_image_widget {
 		$link = !empty($widget_options['link']);
 		$linktarget = !empty($widget_options['linktarget']);
 		
- 		echo '<div id="'.$this->options['control_options']['id_base'].'-'.$number.'" class="widget '.$this->options['widget_options']['classname'].'">';
+ 		echo '<li id="'.$this->options['control_options']['id_base'].'-'.$number.'" class="widget '.$this->options['widget_options']['classname'].'">';
 		
 		
 		if (!empty($widget_options['title'])) {
@@ -160,7 +160,7 @@ class sp_image_widget {
 		
 		echo $after_widget;
 		
-		echo "</div>\n";
+		echo "</li>\n";
 			
 	}
 
