@@ -120,7 +120,7 @@ class sp_image_widget {
 		$link = !empty($widget_options['link']);
 		$linktarget = !empty($widget_options['linktarget']);
 		
- 		echo '<li id="'.$this->options['control_options']['id_base'].'-'.$number.'" class="widget '.$this->options['widget_options']['classname'].'">';
+		echo $before_widget;
 		
 		
 		if (!empty($widget_options['title'])) {
@@ -159,8 +159,6 @@ class sp_image_widget {
 		}
 		
 		echo $after_widget;
-		
-		echo "</li>\n";
 			
 	}
 
