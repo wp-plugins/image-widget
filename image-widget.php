@@ -5,7 +5,7 @@ Plugin Name: Image Widget
 Plugin URI: http://www.shaneandpeter.com/wordpress
 Description: This widget accepts a title, a link and an image and displays them.  The admin panel is separated from the widget to offer independant control
 Author: Shane and Peter, Inc. [Contributors: Kevin Miller, Nick Ohrn]
-Version: 2.2.1
+Version: 2.2.2
 Author URI: http://www.shaneandpeter.com
 */
 
