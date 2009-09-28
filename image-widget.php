@@ -29,15 +29,11 @@ class SP_Image_Widget extends WP_Widget {
 		$this->WP_Widget('widget_sp_image', __('Image Widget'), $widget_ops, $control_ops);
 
 		if (WP_ADMIN) {
-			add_action('load-widgets.php',array($this,'setup_admin'));
 			wp_enqueue_script( 'thickbox' );
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js' );
-			add_filter( 'image_send_to_editor', array( $this,'imageurl'), 100, 7 ); // This BREAKS normal uploads... needs to only happen for image widgets!!!!!!!
+			add_filter( 'image_send_to_editor', array( $this,'imageurl'), 10, 7 );
 		}
-	}
-	
-	function setup_admin() {	
 	}
 		
 	function get_image_url( $id, $width=false, $height=false ) {
@@ -45,7 +41,7 @@ class SP_Image_Widget extends WP_Widget {
 		/**/
 		// Get attachment and resize but return attachment path (needs to return url)
 		$attachment = wp_get_attachment_metadata( $id );
-		$attachment_url = wp_get_attachment_url($id);
+		$attachment_url = wp_get_attachment_url( $id );
 		if (isset($attachment_url)) {
 			if ($width && $height) {
 				$uploads = wp_upload_dir();
@@ -59,25 +55,15 @@ class SP_Image_Widget extends WP_Widget {
 				return $image;
 			}
 		}
-		
-		
-		// Get WP generated attachment
-		/*if ($width && $height) {
-			$attachment = image_downsize( $id, array($width,$height) );			
-			error_log( "attachment\r" . __FILE__ . " Line:" . __LINE__ . "\r" . print_r( $attachment, true ) . "\r" );
-		} else {
-			$attachment = image_downsize( $id );
-		}
-		$image = $attachment[0];
-
-		if (isset($image)) {
-			return $image;
-		}*/
 	}
 	
 	function imageurl( $html, $id, $alt, $title, $align, $url, $size ) {
-		$img = addslashes('<img src="' . wp_get_attachment_url( $id ) . '" />');
-		return "new Array ( '$id', '$img' )";
+		if (strpos($_REQUEST['_wp_http_referer'],$this->id)) { // check that this is for the widget. SEE NOTE #1
+			$img = addslashes('<img src="' . wp_get_attachment_url( $id ) . '" />');
+			return "new Array ( '$id', '$img' )";
+		} else {
+			return $html;
+		}
 	}
 	
 	function widget( $args, $instance ) {
@@ -148,7 +134,7 @@ class SP_Image_Widget extends WP_Widget {
 
 		<p><label for="<?php echo $this->get_field_id('image'); ?>"><?php _e('Image:'); ?></label>
 		<?php
-			$media_upload_iframe_src = "media-upload.php?type=image";
+			$media_upload_iframe_src = "media-upload.php?type=image&widget_id=".$this->id; //NOTE #1: the widget id is added here to allow uploader to only return array if this is used with image widget so that all other uploads are not harmed.
 			$image_upload_iframe_src = apply_filters('image_upload_iframe_src', "$media_upload_iframe_src");
 			$image_title = __('Add an Image');
 		?><br />
