@@ -17,21 +17,6 @@ function send_to_editor(h) {
 		'max-height':jQuery( '#'+currentHeightId ).val()+'px'
 	});
 
-	/*jQuery.ajax({url:'/wp-admin/admin-ajax.php',
-		type:'POST',
-		success:function(response) {
-			responses = eval(response);
-			jQuery( '#display-'+currentImageId ).html(responses[0]);
-			//jQuery( '#display-'+currentImageId ).html(response);
-		},
-		data:{
-			id : vars[0],
-			width : jQuery( '#'+currentWidthId ).val(),
-			height : jQuery( '#'+currentHeightId ).val(),
-			action : 'image_widget'
-		}
-	});*/
-
 	// close thickbox
 	tb_remove();
 }
