@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Image Widget
-Plugin URI: http://www.shaneandpeter.com/wordpress
+Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: This widget accepts a title, an image, a link and a description and displays them.
 Author: Shane and Peter, Inc.
-Version: 3.0.1
+Version: 3.0.2
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -15,13 +15,26 @@ Bugs
 
 */
 
+
+// Load the widget on widgets_init
 function load_sp_image_widget() {
 	register_widget('SP_Image_Widget');
 }
 add_action('widgets_init', 'load_sp_image_widget');
 
+/**
+ * SP Image Widget class
+ *
+ * @author Shane & Peter, Inc. (Peter Chester)
+ **/
 class SP_Image_Widget extends WP_Widget {
-	
+
+	/**
+	 * SP Image Widget constructor
+	 *
+	 * @return void
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
 	function SP_Image_Widget() {
 		$widget_ops = array( 'classname' => 'widget_sp_image', 'description' => __( 'Showcase a single image with a Title, URL, and a Description', 'sp_image_widget' ) );
 		$control_ops = array( 'id_base' => 'widget_sp_image' );
@@ -31,10 +44,19 @@ class SP_Image_Widget extends WP_Widget {
 			wp_enqueue_script( 'thickbox' );
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js' );
-			add_filter( 'image_send_to_editor', array( $this,'imageurl'), 10, 7 );
+			add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 10, 7 );
 		}
 	}
-		
+	
+	/**
+	 * Retrieve resized image URL
+	 *
+	 * @param int $id Post ID or Attachment ID
+	 * @param int $width desired width of image (optional)
+	 * @param int $height desired height of image (optional)
+	 * @return string URL
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
 	function get_image_url( $id, $width=false, $height=false ) {
 		
 		/**/
@@ -56,7 +78,20 @@ class SP_Image_Widget extends WP_Widget {
 		}
 	}
 	
-	function imageurl( $html, $id, $alt, $title, $align, $url, $size ) {
+	/**
+	 * Filter image_end_to_editor results
+	 *
+	 * @param string $html 
+	 * @param int $id 
+	 * @param string $alt 
+	 * @param string $title 
+	 * @param string $align 
+	 * @param string $url 
+	 * @param array $size 
+	 * @return string javascript array of attachment url and id or just the url
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
+	function image_send_to_editor( $html, $id, $alt, $title, $align, $url, $size ) {
 		if (strpos($_REQUEST['_wp_http_referer'],$this->id)) { // check that this is for the widget. SEE NOTE #1
 			$img = addslashes('<img src="' . wp_get_attachment_url( $id ) . '" />');
 			return "new Array ( '$id', '$img' )";
@@ -65,6 +100,14 @@ class SP_Image_Widget extends WP_Widget {
 		}
 	}
 	
+	/**
+	 * Widget frontend output
+	 *
+	 * @param array $args 
+	 * @param array $instance 
+	 * @return void
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
 	function widget( $args, $instance ) {
 		extract($args);
 		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
@@ -94,6 +137,14 @@ class SP_Image_Widget extends WP_Widget {
 		echo $after_widget;
 	}
 
+	/**
+	 * Update widget options
+	 *
+	 * @param object $new_instance Widget Instance
+	 * @param object $old_instance Widget Instance 
+	 * @return object
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags($new_instance['title']);
@@ -114,6 +165,13 @@ class SP_Image_Widget extends WP_Widget {
 		return $instance;
 	}
 
+	/**
+	 * Form UI
+	 *
+	 * @param object $instance Widget Instance
+	 * @return void
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
 	function form( $instance ) {
 
 		$instance = wp_parse_args( (array) $instance, array( 
