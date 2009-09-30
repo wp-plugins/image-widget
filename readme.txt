@@ -34,6 +34,7 @@ If you find any bugs or have any ideas, please mail us.
 New in version 3.0.2
 
 * Added PHPDoc comments
+* Temporarily fixed install bug where no image is saved if resize is not working. (thank you Paul Kaiser from Champaign, Il for your helpful QA support)
 
 New in version 3.0.1
 

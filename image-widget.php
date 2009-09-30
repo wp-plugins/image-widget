@@ -67,8 +67,11 @@ class SP_Image_Widget extends WP_Widget {
 			if ($width && $height) {
 				$uploads = wp_upload_dir();
 				$imgpath = $uploads['basedir'].'/'.$attachment['file'];
-				$image = image_resize( $imgpath, $width, $height );
-				$image = path_join( dirname($attachment_url), basename($image) );
+				if ($image = image_resize( $imgpath, $width, $height )) {
+					$image = path_join( dirname($attachment_url), basename($image) );
+				} else {
+					$image = $attachment_url;
+				}
 			} else {
 				$image = $attachment_url;
 			}
