@@ -1,18 +1,18 @@
 === Image Widget ===
 Contributors: Shane & Peter, Inc.
 Donate link: http://www.shaneandpeter.com
-Tags: widget, image, ad, banner, simple
+Tags: widget, image, ad, banner, simple, upload, sidebar
 Requires at least: 2.8
 Tested up to: 2.8.4
-Stable tag: 3.0
+Stable tag: 3.0.1
 
-Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
+Simple image widget.  Use native Wordpress upload thickbox to add image widgets to your site.
 
 == Description ==
-Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
+Simple image widget.  Use native Wordpress upload thickbox to add image widgets to your site.
 
 Todo:
-* Add an image breaks after save is clicked
+* 'Add an image' breaks after save is clicked
 
 == Installation ==
 
@@ -31,6 +31,10 @@ Todo:
 If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
+
+New in version 3.0.1
+
+* Added 'sp_image_widget' domain for language support.
 
 New in version 3.0
 

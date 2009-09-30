@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://www.shaneandpeter.com/wordpress
 Description: This widget accepts a title, an image, a link and a description and displays them.
 Author: Shane and Peter, Inc.
-Version: 3.0
+Version: 3.0.1
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -23,9 +23,9 @@ add_action('widgets_init', 'load_sp_image_widget');
 class SP_Image_Widget extends WP_Widget {
 	
 	function SP_Image_Widget() {
-		$widget_ops = array( 'classname' => 'widget_sp_image', 'description' => __( 'Showcase a single image with a Title, URL, and a Description' ) );
+		$widget_ops = array( 'classname' => 'widget_sp_image', 'description' => __( 'Showcase a single image with a Title, URL, and a Description', 'sp_image_widget' ) );
 		$control_ops = array( 'id_base' => 'widget_sp_image' );
-		$this->WP_Widget('widget_sp_image', __('Image Widget'), $widget_ops, $control_ops);
+		$this->WP_Widget('widget_sp_image', __('Image Widget', 'sp_image_widget'), $widget_ops, $control_ops);
 
 		if (WP_ADMIN) {
 			wp_enqueue_script( 'thickbox' );
@@ -128,14 +128,14 @@ class SP_Image_Widget extends WP_Widget {
 		) );
 		?>
 
-		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'sp_image_widget'); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['title'])); ?>" /></p>
 
-		<p><label for="<?php echo $this->get_field_id('image'); ?>"><?php _e('Image:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('image'); ?>"><?php _e('Image:', 'sp_image_widget'); ?></label>
 		<?php
 			$media_upload_iframe_src = "media-upload.php?type=image&widget_id=".$this->id; //NOTE #1: the widget id is added here to allow uploader to only return array if this is used with image widget so that all other uploads are not harmed.
 			$image_upload_iframe_src = apply_filters('image_upload_iframe_src', "$media_upload_iframe_src");
-			$image_title = __('Add an Image');
+			$image_title = __('Add an Image', 'sp_image_widget');
 		?><br />
 		<a href="<?php echo $image_upload_iframe_src; ?>&TB_iframe=true" id="add_image-<?php echo $this->get_field_id('image'); ?>" class="thickbox" title='<?php echo $image_title; ?>' onClick="set_active_widget('<?php echo $this->get_field_id('image'); ?>','<?php echo $this->get_field_id('width'); ?>','<?php echo $this->get_field_id('height'); ?>');return false;"><img src='images/media-button-image.gif' alt='<?php echo $image_title; ?>' /> <?php echo $image_title; ?></a>
 		<div id="display-<?php echo $this->get_field_id('image'); ?>"><?php 
@@ -144,20 +144,20 @@ class SP_Image_Widget extends WP_Widget {
 		<input id="<?php echo $this->get_field_id('image'); ?>" name="<?php echo $this->get_field_name('image'); ?>" type="hidden" value="<?php echo $instance['image']; ?>" />
 		</p>		
 
-		<p><label for="<?php echo $this->get_field_id('description'); ?>"><?php _e('Description:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('description'); ?>"><?php _e('Description:', 'sp_image_widget'); ?></label>
 		<textarea rows="8" class="widefat" id="<?php echo $this->get_field_id('description'); ?>" name="<?php echo $this->get_field_name('description'); ?>"><?php echo format_to_edit($instance['description']); ?></textarea></p>
 
-		<p><label for="<?php echo $this->get_field_id('link'); ?>"><?php _e('Link:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('link'); ?>"><?php _e('Link:', 'sp_image_widget'); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('link'); ?>" name="<?php echo $this->get_field_name('link'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['link'])); ?>" /><br />
 		<select name="<?php echo $this->get_field_name('linktarget'); ?>" id="<?php echo $this->get_field_id('linktarget'); ?>">
-			<option value="_self"<?php selected( $instance['linktarget'], '_self' ); ?>><?php _e('Stay in Window'); ?></option>
-			<option value="_blank"<?php selected( $instance['linktarget'], '_blank' ); ?>><?php _e('Open New Window'); ?></option>
+			<option value="_self"<?php selected( $instance['linktarget'], '_self' ); ?>><?php _e('Stay in Window', 'sp_image_widget'); ?></option>
+			<option value="_blank"<?php selected( $instance['linktarget'], '_blank' ); ?>><?php _e('Open New Window', 'sp_image_widget'); ?></option>
 		</select></p>
 
-		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', 'sp_image_widget'); ?></label>
 		<input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['width'])); ?>" /></p>
 
-		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', 'sp_image_widget'); ?></label>
 		<input id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['height'])); ?>" /></p>
 	
 <?php
