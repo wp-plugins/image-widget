@@ -9,10 +9,9 @@ Author URI: http://www.shaneandpeter.com
 */
 
 /*
-Feature Ideas
+Bugs
 
 * reclicking Add image doesn't work
-* add css and run functions ONYL on widget admin page.
 
 */
 

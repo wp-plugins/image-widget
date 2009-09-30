@@ -2,17 +2,17 @@
 Contributors: Shane & Peter, Inc.
 Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple
-Requires at least: 2.0
-Tested up to: 2.7.1
-Stable tag: 2.2.2
+Requires at least: 2.8
+Tested up to: 2.8.4
+Stable tag: 3.0
 
 Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
 
 == Description ==
 Simple image widget.  Allows for placement of an image in the sidebar without requiring Design access.
 
-todo:
-* support image sizing (maybe)
+Todo:
+* Add an image breaks after save is clicked
 
 == Installation ==
 
@@ -26,12 +26,16 @@ todo:
 1. In your WordPress administration, go to the Plugins page
 1. Activate the Image Widget plugin and a subpage for the plugin will appear
    in your Manage menu.
-1. Go to the Design > Widget page and place the widget in your sidebar in the Design
-1. Go to Manage > Image Widget to add a title, link, and image.
+1. Go to the Appearance > Widget page and place the widget in your sidebar in the Design
 
 If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
+
+New in version 3.0
+
+* Completely remodeled the plugin to use the native wordpress uploader and be compatible with Wordpress 2.8 plugin architecture.
+* Removed externalized widget admin.
 
 New in version 2.2.2
 
