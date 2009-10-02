@@ -8,14 +8,6 @@ Version: 3.0.3
 Author URI: http://www.shaneandpeter.com
 */
 
-/*
-Bugs
-
-* reclicking Add image doesn't work
-
-*/
-
-
 // Load the widget on widgets_init
 function load_sp_image_widget() {
 	register_widget('SP_Image_Widget');

@@ -11,9 +11,6 @@ Simple image widget.  Use native Wordpress upload thickbox to add image widgets 
 == Description ==
 Simple image widget.  Use native Wordpress upload thickbox to add image widgets to your site.
 
-Todo:
-* 'Add an image' breaks after save is clicked
-
 == Installation ==
 
 **Install**
