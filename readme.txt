@@ -4,7 +4,7 @@ Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple, upload, sidebar
 Requires at least: 2.8
 Tested up to: 2.8.4
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 
 Simple image widget.  Use native Wordpress upload thickbox to add image widgets to your site.
 
