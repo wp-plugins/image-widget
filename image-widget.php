@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: This widget accepts a title, an image, a link and a description and displays them.
 Author: Shane and Peter, Inc.
-Version: 3.0.2
+Version: 3.0.3
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -198,7 +198,7 @@ class SP_Image_Widget extends WP_Widget {
 			$image_upload_iframe_src = apply_filters('image_upload_iframe_src', "$media_upload_iframe_src");
 			$image_title = __('Add an Image', 'sp_image_widget');
 		?><br />
-		<a href="<?php echo $image_upload_iframe_src; ?>&TB_iframe=true" id="add_image-<?php echo $this->get_field_id('image'); ?>" class="thickbox" title='<?php echo $image_title; ?>' onClick="set_active_widget('<?php echo $this->get_field_id('image'); ?>','<?php echo $this->get_field_id('width'); ?>','<?php echo $this->get_field_id('height'); ?>');return false;"><img src='images/media-button-image.gif' alt='<?php echo $image_title; ?>' /> <?php echo $image_title; ?></a>
+		<a href="<?php echo $image_upload_iframe_src; ?>&TB_iframe=true" id="add_image-<?php echo $this->get_field_id('image'); ?>" class="thickbox-image-widget" title='<?php echo $image_title; ?>' onClick="set_active_widget('<?php echo $this->get_field_id('image'); ?>','<?php echo $this->get_field_id('width'); ?>','<?php echo $this->get_field_id('height'); ?>');return false;"><img src='images/media-button-image.gif' alt='<?php echo $image_title; ?>' /> <?php echo $image_title; ?></a>
 		<div id="display-<?php echo $this->get_field_id('image'); ?>"><?php 
 		if ($instance['imageurl']) { echo "<img src=\"{$instance['imageurl']}\" alt=\"{$instance['title']}\" />"; } 
 		?></div>

@@ -4,6 +4,7 @@ function set_active_widget(imageId,widthId,heightId) {
 	currentWidthId = widthId;
 	currentHeightId = heightId;
 }
+
 function send_to_editor(h) {
 	vars = eval(h);
 	
@@ -20,3 +21,11 @@ function send_to_editor(h) {
 	// close thickbox
 	tb_remove();
 }
+
+jQuery(document).ready(function() {
+	jQuery("body").click(function(event) {
+		if (jQuery(event.target).is('a.thickbox-image-widget')) {
+			tb_show("Add an Image", event.target.href, false);
+		}
+	});
+});
