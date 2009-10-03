@@ -6,10 +6,16 @@ Requires at least: 2.8
 Tested up to: 2.8.4
 Stable tag: 3.0.4
 
+== Description ==
+
 Simple image widget.  Use native Wordpress upload thickbox to add image widgets to your site.
 
-== Description ==
-Simple image widget.  Use native Wordpress upload thickbox to add image widgets to your site.
+* MU Compatible
+* Handles image resizing
+* Link the image
+* Title and Description
+* Very versitile.  All fields are optional.
+* Upload, link to external image, or select an image from your media collection using the built in thickbox browser.
 
 == Installation ==
 
@@ -28,7 +34,9 @@ Simple image widget.  Use native Wordpress upload thickbox to add image widgets 
 If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
+
 New in version 3.0.3
+
 * Fixed the broken "Add Image" link (THANK YOU SMURKAS!!!)
 
 New in version 3.0.2
