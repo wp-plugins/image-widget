@@ -1,3 +1,4 @@
+// when add image is clicked currently active widget is set
 function set_active_widget(imageId,widthId,heightId) {
 	// establish which widget is being updated
 	currentImageId = imageId;
@@ -5,7 +6,9 @@ function set_active_widget(imageId,widthId,heightId) {
 	currentHeightId = heightId;
 }
 
+// Hijack send to editor function
 function send_to_editor(h) {
+	alert(h);
 	vars = eval(h);
 	
 	// store attachment id in hidden field
@@ -22,6 +25,7 @@ function send_to_editor(h) {
 	tb_remove();
 }
 
+// Hack for busted "Add Image" link courtesy of smurkas
 jQuery(document).ready(function() {
 	jQuery("body").click(function(event) {
 		if (jQuery(event.target).is('a.thickbox-image-widget')) {
