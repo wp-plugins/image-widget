@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: This widget accepts a title, an image, a link and a description and displays them.
 Author: Shane and Peter, Inc.
-Version: 3.0.4
+Version: 3.0.5
 Author URI: http://www.shaneandpeter.com
 */
 
