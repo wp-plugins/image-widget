@@ -87,7 +87,7 @@ class SP_Image_Widget extends WP_Widget {
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
 	function image_send_to_editor( $html, $id, $alt, $title, $align, $url, $size ) {
-		if (strpos($_REQUEST['_wp_http_referer'],$this->id)) { // check that this is for the widget. SEE NOTE #1
+		if (strpos($_REQUEST['_wp_http_referer'],$this->id_base)) { // check that this is for the widget. SEE NOTE #1
 			$img = addslashes('<img src="' . wp_get_attachment_url( $id ) . '" />');
 			return "new Array ( '$id', '$img' )";
 		} else {
