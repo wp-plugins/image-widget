@@ -11,7 +11,7 @@ Stable tag: 3.0.5
 Simple image widget.  Use native Wordpress upload thickbox to add image widgets to your site.
 
 * MU Compatible
-* Handles image resizing
+* Handles image resizing and alignment
 * Link the image
 * Title and Description
 * Very versitile.  All fields are optional.
@@ -37,7 +37,12 @@ If you find any bugs or have any ideas, please mail us.
 
 New in version 3.0.5
 
-* PHP4 compatibility (thank you capnhairdo, smurkas, squigie and laurie!!!)
+Thank you smurkas, squigie and laurie!!!  Special thanks to Cameron Clark from http://prolifique.com a.k.a capnhairdo for contributing invaluable javascript debugging skills and throwing together some great code.
+
+* PHP4 compatibility
+* Tighter integration with the thickbok uploader attributes including caption, description, alignment, and link
+* Tighter image resize preview
+* Add Image link becomes "Change Image" once image has been added
 
 New in version 3.0.4
 

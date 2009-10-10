@@ -36,7 +36,9 @@ class SP_Image_Widget extends WP_Widget {
 			wp_enqueue_script( 'thickbox' );
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js' );
+			// add our filter to send modified output back to image widget
 			add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 10, 7 );
+			add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
 		}
 	}
 	
@@ -87,12 +89,26 @@ class SP_Image_Widget extends WP_Widget {
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
 	function image_send_to_editor( $html, $id, $alt, $title, $align, $url, $size ) {
-		if (strpos($_REQUEST['_wp_http_referer'],$this->id_base)) { // check that this is for the widget. SEE NOTE #1
-			$img = addslashes('<img src="' . wp_get_attachment_url( $id ) . '" />');
-			return "new Array ( '$id', '$img' )";
-		} else {
-			return $html;
+		// Normally, media uploader return an HTML string (in this case, typically a complete image tag surrounded by a caption).
+		// Don't change that; instead, send custom javascript variables back to opener.
+		// Check that this is for the widget. Shouldn't hurt anything if it runs, but let's do it needlessly.
+		if (strpos($_REQUEST['_wp_http_referer'],$this->id_base)) {
+			?>
+			<script type="text/javascript">
+				// send image variables back to opener
+				var win = window.dialogArguments || opener || parent || top;
+				win.IW_html = '<?php echo addslashes($html) ?>';
+				win.IW_img_id = '<?php echo $id ?>';
+				win.IW_alt = '<?php echo addslashes($alt) ?>';
+				win.IW_title = '<?php echo addslashes($title) ?>';
+				win.IW_align = '<?php echo $align ?>';
+				win.IW_url = '<?php echo $url ?>';
+				win.IW_size = '<?php echo $size ?>';
+				//alert("sending variables: id: "+win.IW_img_id+"\n"+"alt: "+win.IW_alt+"\n"+"title: "+win.IW_title+"\n"+"align: "+win.IW_align+"\n"+"url: "+win.IW_url+"\n"+"size: "+win.IW_size);
+			</script>
+			<?php
 		}
+		return $html;
 	}
 	
 	/**
@@ -112,9 +128,19 @@ class SP_Image_Widget extends WP_Widget {
 			if ($instance['link']) {
 				echo '<a class="'.$instance['classname'].'-image-link" href="'.$instance['link'].'" target="'.$instance['linktarget'].'">';
 			}
-			
 			if ($instance['imageurl']) {
-				echo "<img src=\"{$instance['imageurl']}\" alt=\"{$instance['title']}\" />";
+				echo "<img src=\"{$instance['imageurl']}\" alt=\"{$instance['title']}\" style=\"";
+				if (!empty($instance['width']) && is_numeric($instance['width'])) {
+					echo "max-width: {$instance['width']}px;";
+				}
+	 			if (!empty($instance['height']) && is_numeric($instance['height'])) {
+					echo "max-height: {$instance['height']}px;";
+				}
+				echo "\"";
+				if (!empty($instance['align']) && $instance['align'] != 'none') {
+					echo " class=\"align{$instance['align']}\"";
+				}
+				echo " />";
 			}
 
 			if ($instance['link']) { echo '</a>'; }
@@ -152,10 +178,11 @@ class SP_Image_Widget extends WP_Widget {
 		}
 		$instance['link'] = $new_instance['link'];
 		$instance['image'] = $new_instance['image'];
-		$instance['imageurl'] = $this->get_image_url($new_instance['image'],$new_instance['width'],$new_instance['height']);
+		$instance['imageurl'] = $this->get_image_url($new_instance['image'],$new_instance['width'],$new_instance['height']);  // image resizing not working right now
 		$instance['linktarget'] = $new_instance['linktarget'];
 		$instance['width'] = $new_instance['width'];
 		$instance['height'] = $new_instance['height'];
+		$instance['align'] = $new_instance['align'];
 
 		return $instance;
 	}
@@ -177,7 +204,8 @@ class SP_Image_Widget extends WP_Widget {
 			'width' => '', 
 			'height' => '', 
 			'image' => '',
-			'imageurl' => ''
+			'imageurl' => '',
+			'align' => ''
 		) );
 		?>
 
@@ -188,16 +216,30 @@ class SP_Image_Widget extends WP_Widget {
 		<?php
 			$media_upload_iframe_src = "media-upload.php?type=image&widget_id=".$this->id; //NOTE #1: the widget id is added here to allow uploader to only return array if this is used with image widget so that all other uploads are not harmed.
 			$image_upload_iframe_src = apply_filters('image_upload_iframe_src', "$media_upload_iframe_src");
-			$image_title = __('Add an Image', 'sp_image_widget');
+			$image_title = __(($instance['image'] ? 'Change Image' : 'Add Image'), 'sp_image_widget');
 		?><br />
-		<a href="<?php echo $image_upload_iframe_src; ?>&TB_iframe=true" id="add_image-<?php echo $this->get_field_id('image'); ?>" class="thickbox-image-widget" title='<?php echo $image_title; ?>' onClick="set_active_widget('<?php echo $this->get_field_id('image'); ?>','<?php echo $this->get_field_id('width'); ?>','<?php echo $this->get_field_id('height'); ?>');return false;"><img src='images/media-button-image.gif' alt='<?php echo $image_title; ?>' /> <?php echo $image_title; ?></a>
+		<a href="<?php echo $image_upload_iframe_src; ?>&TB_iframe=true" id="add_image-<?php echo $this->get_field_id('image'); ?>" class="thickbox-image-widget" title='<?php echo $image_title; ?>' onClick="set_active_widget('<?php echo $this->id; ?>');return false;" style="text-decoration:none"><img src='images/media-button-image.gif' alt='<?php echo $image_title; ?>' align="absmiddle" /> <?php echo $image_title; ?></a>
 		<div id="display-<?php echo $this->get_field_id('image'); ?>"><?php 
-		if ($instance['imageurl']) { echo "<img src=\"{$instance['imageurl']}\" alt=\"{$instance['title']}\" />"; } 
+		if ($instance['imageurl']) {
+			echo "<img src=\"{$instance['imageurl']}\" alt=\"{$instance['title']}\" style=\"";
+				if ($instance['width'] && is_numeric($instance['width'])) {
+					echo "max-width: {$instance['width']}px;";
+				}
+ 				if ($instance['height'] && is_numeric($instance['height'])) {
+					echo "max-height: {$instance['height']}px;";
+				}
+				echo "\"";
+				if (!empty($instance['align']) && $instance['align'] != 'none') {
+					echo " class=\"align{$instance['align']}\"";
+				}
+				echo " />";
+		}
 		?></div>
+		<br clear="all" />
 		<input id="<?php echo $this->get_field_id('image'); ?>" name="<?php echo $this->get_field_name('image'); ?>" type="hidden" value="<?php echo $instance['image']; ?>" />
-		</p>		
+		</p>
 
-		<p><label for="<?php echo $this->get_field_id('description'); ?>"><?php _e('Description:', 'sp_image_widget'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('description'); ?>"><?php _e('Caption:', 'sp_image_widget'); ?></label>
 		<textarea rows="8" class="widefat" id="<?php echo $this->get_field_id('description'); ?>" name="<?php echo $this->get_field_name('description'); ?>"><?php echo format_to_edit($instance['description']); ?></textarea></p>
 
 		<p><label for="<?php echo $this->get_field_id('link'); ?>"><?php _e('Link:', 'sp_image_widget'); ?></label>
@@ -208,12 +250,38 @@ class SP_Image_Widget extends WP_Widget {
 		</select></p>
 
 		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', 'sp_image_widget'); ?></label>
-		<input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['width'])); ?>" /></p>
+		<input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['width'])); ?>" onchange="changeImgWidth('<?php echo $this->id; ?>')" /></p>
 
 		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', 'sp_image_widget'); ?></label>
-		<input id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['height'])); ?>" /></p>
+		<input id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['height'])); ?>" onchange="changeImgHeight('<?php echo $this->id; ?>')" /></p>
 	
+		<p><label for="<?php echo $this->get_field_id('align'); ?>"><?php _e('Align:', 'sp_image_widget'); ?></label>
+		<select name="<?php echo $this->get_field_name('align'); ?>" id="<?php echo $this->get_field_id('align'); ?>" onchange="changeImgAlign('<?php echo $this->id; ?>')">
+			<option value="none"<?php selected( $instance['align'], 'none' ); ?>><?php _e('none', 'sp_image_widget'); ?></option>
+			<option value="left"<?php selected( $instance['align'], 'left' ); ?>><?php _e('left', 'sp_image_widget'); ?></option>
+			<option value="center"<?php selected( $instance['align'], 'center' ); ?>><?php _e('center', 'sp_image_widget'); ?></option>
+			<option value="right"<?php selected( $instance['align'], 'right' ); ?>><?php _e('right', 'sp_image_widget'); ?></option>
+		</select></p>
+
 <?php
+	}
+	
+	/**
+	 * Admin header css
+	 *
+	 * @return void
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
+	function admin_head() {
+		?>
+		<style type="text/css">
+			.aligncenter {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+			}
+		</style>
+		<?php
 	}
 }
 ?>
