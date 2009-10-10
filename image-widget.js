@@ -16,16 +16,16 @@ function send_to_editor(h) {
 	jQuery( '#widget-'+self.IW_instance+'-height' ).val(jQuery( '#display-widget-'+self.IW_instance+'-image img').attr('height'));
 
 	// set alignment in widget
-	if (jQuery.trim(self.IW_align) != '') { jQuery( '#widget-'+self.IW_instance+'-align' ).val(self.IW_align); }
+	jQuery( '#widget-'+self.IW_instance+'-align' ).val(self.IW_align);
 
 	// set title in widget
-	if (jQuery.trim(self.IW_title) != '') { jQuery( '#widget-'+self.IW_instance+'-title' ).val(self.IW_title); }
+	jQuery( '#widget-'+self.IW_instance+'-title' ).val(self.IW_title);
 
 	// set caption in widget
-	if (jQuery.trim(self.IW_alt) != '') { jQuery( '#widget-'+self.IW_instance+'-description' ).val(self.IW_alt); }
+	jQuery( '#widget-'+self.IW_instance+'-description' ).val(self.IW_alt);
 
 	// set link in widget
-	if (jQuery.trim(self.IW_url) != '') { jQuery( '#widget-'+self.IW_instance+'-link' ).val(self.IW_url); }
+	jQuery( '#widget-'+self.IW_instance+'-link' ).val(self.IW_url);
 
 	// close thickbox
 	tb_remove();
