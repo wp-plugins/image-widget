@@ -148,11 +148,7 @@ class SP_Image_Widget extends WP_Widget {
 		if (!empty($instance['description'])) {
 			$text = apply_filters( 'widget_text', $instance['description'] );
 			echo '<p class="'.$this->widget_ops['classname'].'-description" >';
-			if ($instance['link']) {
-				echo '<a class="'.$this->widget_ops['classname'].'-image-link-p" href="'.$instance['link'].'" target="'.$instance['linktarget'].'">';
-			}
 			echo wpautop($text);			
-			if ($instance['link']) { echo '</a>'; }
 			echo "</p>";
 		}
 		echo $after_widget;
