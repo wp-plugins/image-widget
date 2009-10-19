@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: This widget accepts a title, an image, a link and a description and displays them.
 Author: Shane and Peter, Inc.
-Version: 3.0.5
+Version: 3.0.6
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -37,7 +37,7 @@ class SP_Image_Widget extends WP_Widget {
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js' );
 			// add our filter to send modified output back to image widget
-			add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 10, 7 );
+			add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 7 );
 			add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
 		}
 	}
