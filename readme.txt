@@ -1,7 +1,7 @@
 === Image Widget ===
 Contributors: Shane & Peter, Inc.
 Donate link: http://www.shaneandpeter.com
-Tags: widget, image, ad, banner, simple, upload, sidebar
+Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 2.8
 Tested up to: 2.8.4
 Stable tag: 3.0.6
@@ -95,4 +95,6 @@ Thank you smurkas, squigie and laurie!!!  Special thanks to Cameron Clark from h
 
 == Screenshots ==
 
-1. Image administration screen
+1. Image Widget admin screen.
+2. Thickbox uploader for the Image Widget
+3. Image Widget on the front of a plain Wordpress install.
