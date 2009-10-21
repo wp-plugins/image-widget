@@ -32,14 +32,17 @@ class SP_Image_Widget extends WP_Widget {
 		$control_ops = array( 'id_base' => 'widget_sp_image' );
 		$this->WP_Widget('widget_sp_image', __('Image Widget', 'sp_image_widget'), $widget_ops, $control_ops);
 
+		global $pagenow;
 		if (WP_ADMIN) {
-			wp_enqueue_script( 'thickbox' );
-			wp_enqueue_style( 'thickbox' );
-			wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js' );
-			// add our filter to send modified output back to image widget
-			add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 7 );
-			add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
+			if ( 'widgets.php' == $pagenow ) {
+				wp_enqueue_style( 'thickbox' );
+				wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js',array('thickbox') );
+				add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
+			} elseif ( 'media-upload.php' == $pagenow ) {
+				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 7 );			
+			}
 		}
+		
 	}
 	
 	/**
