@@ -4,7 +4,7 @@ Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 2.8
 Tested up to: 2.8.4
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 
 == Description ==
 
@@ -34,6 +34,12 @@ Simple image widget.  Use native Wordpress upload thickbox to add image widgets 
 If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
+
+= 3.0.7 =
+
+* Fix Dean's Fcuk editor conflict. (Thanks for the report Laurie L_T_G)
+* Fix IE8 bug (Remove extra comma from line 66 of js - thanks for the report reface)
+* Update functions and enqueued scripts to only trigger on widget page.
 
 = 3.0.6 =
 
