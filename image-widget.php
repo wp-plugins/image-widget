@@ -36,10 +36,10 @@ class SP_Image_Widget extends WP_Widget {
 		if (WP_ADMIN) {
 			if ( 'widgets.php' == $pagenow ) {
 				wp_enqueue_style( 'thickbox' );
-				wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js',array('thickbox') );
+				wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js',array('thickbox'), false, true );
 				add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
 			} elseif ( 'media-upload.php' == $pagenow ) {
-				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 7 );			
+				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 7 );
 			}
 		}
 		
