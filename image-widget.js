@@ -62,7 +62,7 @@ function changeImgSize(instance,width,height) {
 		width = width + 'px';
 	}
 	jQuery( '#display-widget-'+instance+'-image img' ).css({
-		'width':width,
+		'width':width
 	});
 
 	if (isNaN(height) || height < 1) {
