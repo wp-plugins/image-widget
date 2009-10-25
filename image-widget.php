@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Shane and Peter, Inc.
-Version: 3.0.9
+Version: 3.0.10
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -87,11 +87,14 @@ class SP_Image_Widget extends WP_Widget {
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
 	public function is_sp_widget_context() {
-		if ( strpos($_SERVER['HTTP_REFERER'],$this->id_base) !== false || strpos($_REQUEST['_wp_http_referer'],$this->id_base) !== false ) {
+		if ( isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],$this->id_base) !== false ) {
 			return true;
-		} else {
-			return false;
+		} elseif ( isset($_REQUEST['_wp_http_referer']) && strpos($_REQUEST['_wp_http_referer'],$this->id_base) !== false ) {
+			return true;
+		} elseif ( isset($_REQUEST['widget_id']) && strpos($_REQUEST['widget_id'],$this->id_base) !== false ) {
+			return true;
 		}
+		return false;
 	}
 	
 	/**
