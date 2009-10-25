@@ -2,9 +2,9 @@
 /*
 Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
-Description: This widget accepts a title, an image, a link and a description and displays them.
+Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Shane and Peter, Inc.
-Version: 3.0.7
+Version: 3.0.8
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -38,8 +38,10 @@ class SP_Image_Widget extends WP_Widget {
 				wp_enqueue_style( 'thickbox' );
 				wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js',array('thickbox'), false, true );
 				add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
-			} elseif ( 'media-upload.php' == $pagenow ) {
+			} elseif ( 'media-upload.php' == $pagenow || 'async-upload.php' == $pagenow ) {
 				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 7 );
+				add_filter( 'gettext', array( $this, 'replace_text_in_thitckbox' ), 1, 3 );
+				add_filter( 'media_upload_tabs', array( $this, 'media_upload_tabs' ) );
 			}
 		}
 		
@@ -77,6 +79,38 @@ class SP_Image_Widget extends WP_Widget {
 			}
 		}
 	}
+
+	/**
+	 * Test context to see if the uploader is being used for the image widget or for other regular uploads
+	 *
+	 * @return void
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
+	public function is_sp_widget_context() {
+		if ( strpos($_SERVER['HTTP_REFERER'],$this->id_base) !== false || strpos($_REQUEST['_wp_http_referer'],$this->id_base) !== false ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Somewhat hacky way of replacing "Insert into Post" with "Insert into Widget"
+	 *
+	 * @param string $translated_text text that has already been translated (normally passed straight through)
+	 * @param string $source_text text as it is in the code
+	 * @param string $domain domain of the text
+	 * @return void
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
+	public function replace_text_in_thitckbox($translated_text, $source_text, $domain) {
+		if ( $this->is_sp_widget_context() ) {
+			if ('Insert into Post' == $source_text) {
+				return __('Insert Into Widget', 'sp_image_widget' );
+			}
+		}
+		return $translated_text;
+	}
 	
 	/**
 	 * Filter image_end_to_editor results
@@ -95,7 +129,7 @@ class SP_Image_Widget extends WP_Widget {
 		// Normally, media uploader return an HTML string (in this case, typically a complete image tag surrounded by a caption).
 		// Don't change that; instead, send custom javascript variables back to opener.
 		// Check that this is for the widget. Shouldn't hurt anything if it runs, but let's do it needlessly.
-		if (strpos($_REQUEST['_wp_http_referer'],$this->id_base)) {
+		if ( $this->is_sp_widget_context() ) {
 			?>
 			<script type="text/javascript">
 				// send image variables back to opener
@@ -113,6 +147,21 @@ class SP_Image_Widget extends WP_Widget {
 		}
 		return $html;
 	}
+
+	/**
+	 * Remove from url tab until that functionality is added to widgets.
+	 *
+	 * @param array $tabs 
+	 * @return void
+	 * @author Shane & Peter, Inc. (Peter Chester)
+	 */
+	public function media_upload_tabs($tabs) {
+		if ( $this->is_sp_widget_context() ) {
+			unset($tabs['type_url']);
+			return $tabs;
+		}
+	}
+
 	
 	/**
 	 * Widget frontend output

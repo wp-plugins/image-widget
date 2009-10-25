@@ -3,18 +3,18 @@ Contributors: Shane & Peter, Inc.
 Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 2.8
-Tested up to: 2.8.4
-Stable tag: 3.0.7
+Tested up to: 2.9
+Stable tag: 3.0.8
 
 == Description ==
 
-Simple image widget.  Use native Wordpress upload thickbox to add image widgets to your site.
+Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 
 * MU Compatible
 * Handles image resizing and alignment
 * Link the image
 * Title and Description
-* Very versitile.  All fields are optional.
+* Very versatile.  All fields are optional.
 * Upload, link to external image, or select an image from your media collection using the built in thickbox browser.
 
 == Installation ==
@@ -34,6 +34,11 @@ Simple image widget.  Use native Wordpress upload thickbox to add image widgets 
 If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
+
+= 3.0.8 =
+
+* Remove the "From URL" tab since it isn't supported.
+* Replace "Insert into Post" with "Insert into Widget" in thickbox.
 
 = 3.0.7 =
 
