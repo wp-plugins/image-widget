@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Shane and Peter, Inc.
-Version: 3.1
+Version: 3.1.1
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -86,7 +86,7 @@ class SP_Image_Widget extends WP_Widget {
 	 * @return void
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
-	public function is_sp_widget_context() {
+	function is_sp_widget_context() {
 		if ( isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],$this->id_base) !== false ) {
 			return true;
 		} elseif ( isset($_REQUEST['_wp_http_referer']) && strpos($_REQUEST['_wp_http_referer'],$this->id_base) !== false ) {
@@ -106,7 +106,7 @@ class SP_Image_Widget extends WP_Widget {
 	 * @return void
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
-	public function replace_text_in_thitckbox($translated_text, $source_text, $domain) {
+	function replace_text_in_thitckbox($translated_text, $source_text, $domain) {
 		if ( $this->is_sp_widget_context() ) {
 			if ('Insert into Post' == $source_text) {
 				return __('Insert Into Widget', 'sp_image_widget' );
@@ -158,7 +158,7 @@ class SP_Image_Widget extends WP_Widget {
 	 * @return void
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
-	public function media_upload_tabs($tabs) {
+	function media_upload_tabs($tabs) {
 		if ( $this->is_sp_widget_context() ) {
 			unset($tabs['type_url']);
 		}
