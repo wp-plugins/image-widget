@@ -181,7 +181,7 @@ class SP_Image_Widget extends WP_Widget {
 		if ( !empty( $title ) ) { echo $before_title . $title . $after_title; }
 		if (!empty($instance['image'])) {
 			if ($instance['link']) {
-				echo '<a class="'.$instance['classname'].'-image-link" href="'.$instance['link'].'" target="'.$instance['linktarget'].'">';
+				echo '<a class="'.$this->widget_options['classname'].'-image-link" href="'.$instance['link'].'" target="'.$instance['linktarget'].'">';
 			}
 			if ($instance['imageurl']) {
 				echo "<img src=\"{$instance['imageurl']}\" alt=\"{$instance['title']}\" style=\"";
@@ -202,7 +202,7 @@ class SP_Image_Widget extends WP_Widget {
 		}
 		if (!empty($instance['description'])) {
 			$text = apply_filters( 'widget_text', $instance['description'] );
-			echo '<p class="'.$this->widget_ops['classname'].'-description" >';
+			echo '<p class="'.$this->widget_options['classname'].'-description" >';
 			echo wpautop($text);			
 			echo "</p>";
 		}
