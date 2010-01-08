@@ -35,6 +35,10 @@ If you find any bugs or have any ideas, please mail us.
 
 == Changelog ==
 
+= 3.1.2 =
+
+* Fix bug: XHTML Compliance (thanks HGU for offering a patch and thanks webmasterlistingarts for filing the bug)
+
 = 3.1.1 =
 
 * Fix bug: php4 reported error: PHP Parse error:  syntax error, unexpected T_STRING, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or '}' (thanks natashaelaine and massimopaolini)
