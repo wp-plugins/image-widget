@@ -38,6 +38,7 @@ If you find any bugs or have any ideas, please mail us.
 = 3.1.2 =
 
 * Fix bug: XHTML Compliance (thanks HGU for offering a patch and thanks webmasterlistingarts for filing the bug)
+* Replaced <p> with <div> in description to also improve XHTML compliance.
 
 = 3.1.1 =
 

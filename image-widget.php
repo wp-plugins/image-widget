@@ -202,9 +202,9 @@ class SP_Image_Widget extends WP_Widget {
 		}
 		if (!empty($instance['description'])) {
 			$text = apply_filters( 'widget_text', $instance['description'] );
-			echo '<p class="'.$this->widget_options['classname'].'-description" >';
+			echo '<div class="'.$this->widget_options['classname'].'-description" >';
 			echo wpautop($text);			
-			echo "</p>";
+			echo "</div>";
 		}
 		echo $after_widget;
 	}
