@@ -3,8 +3,8 @@ Contributors: Shane & Peter, Inc.
 Donate link: http://www.shaneandpeter.com
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 2.8
-Tested up to: 2.9
-Stable tag: 3.1.1
+Tested up to: 2.9.1
+Stable tag: 3.1.2
 
 == Description ==
 
