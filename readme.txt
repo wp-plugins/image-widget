@@ -1,10 +1,10 @@
 === Image Widget ===
 Contributors: Shane & Peter, Inc.
-Donate link: http://www.shaneandpeter.com
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 2.8
-Tested up to: 2.9.1
-Stable tag: 3.1.2
+Tested up to: 2.9.1.1
+Stable tag: 3.1.3
 
 == Description ==
 
@@ -16,6 +16,12 @@ Simple image widget that uses native Wordpress upload thickbox to add image widg
 * Title and Description
 * Very versatile.  All fields are optional.
 * Upload, link to external image, or select an image from your media collection using the built in thickbox browser.
+
+This plugin is actively supported and we will do our best to help you. In return we simply as 3 things:
+
+1. Help Out. If you see a question on the forum you can help with or have a great idea and want to code it up and submit a patch, that would be just plain awesome and we will shower your with praise. Might even be a good way to get to know us and lead to some paid work if you freelance.
+1. Donate - if this is generating enough revenue to support our time it makes all the difference in the world
+https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
 
 == Installation ==
 
@@ -33,12 +39,18 @@ Simple image widget that uses native Wordpress upload thickbox to add image widg
 
 If you find any bugs or have any ideas, please mail us.
 
+Please visit the forum for questions or comments: http://wordpress.org/tags/image-widget/
+
 == Changelog ==
+
+= 3.1.3 =
+
+* Added German language support (Thank you Rüdiger Weiß!!!)
 
 = 3.1.2 =
 
 * Fix bug: XHTML Compliance (thanks HGU for offering a patch and thanks webmasterlistingarts for filing the bug)
-* Replaced <p> with <div> in description to also improve XHTML compliance.
+* Replaced `<p>` with `<div>` in description to also improve XHTML compliance.
 
 = 3.1.1 =
 
@@ -104,7 +116,7 @@ Thank you smurkas, squigie and laurie!!!  Special thanks to Cameron Clark from h
 
 = 2.2.1 =
 
-* Update <div> to be <li> (Thanks to Lois Turley)
+* Update `<div>` to be `<li>` (Thanks to Lois Turley)
 
 = 2.2 =
 
@@ -124,5 +136,15 @@ Thank you smurkas, squigie and laurie!!!  Special thanks to Cameron Clark from h
 == Screenshots ==
 
 1. Image Widget admin screen.
-2. Thickbox uploader for the Image Widget
-3. Image Widget on the front of a plain Wordpress install.
+1. Thickbox uploader for the Image Widget
+1. Image Widget on the front of a plain Wordpress install.
+
+== Frequently Asked Questions ==
+
+= Where do I go to file a bug or ask a question? =
+
+Please visit the forum for questions or comments: http://wordpress.org/tags/image-widget/
+
+ == Upgrade Notice ==
+
+This upgrade should have no impact on existing installs.

@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Shane and Peter, Inc.
-Version: 3.1.2
+Version: 3.1.3
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -20,6 +20,8 @@ add_action('widgets_init', 'load_sp_image_widget');
  * @author Shane & Peter, Inc. (Peter Chester)
  **/
 class SP_Image_Widget extends WP_Widget {
+	
+	public $pluginDomain = 'sp_image_widget';
 
 	/**
 	 * SP Image Widget constructor
@@ -28,9 +30,10 @@ class SP_Image_Widget extends WP_Widget {
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
 	function SP_Image_Widget() {
-		$widget_ops = array( 'classname' => 'widget_sp_image', 'description' => __( 'Showcase a single image with a Title, URL, and a Description', 'sp_image_widget' ) );
+		$this->loadPluginTextDomain();
+		$widget_ops = array( 'classname' => 'widget_sp_image', 'description' => __( 'Showcase a single image with a Title, URL, and a Description', $this->pluginDomain ) );
 		$control_ops = array( 'id_base' => 'widget_sp_image' );
-		$this->WP_Widget('widget_sp_image', __('Image Widget', 'sp_image_widget'), $widget_ops, $control_ops);
+		$this->WP_Widget('widget_sp_image', __('Image Widget', $this->pluginDomain), $widget_ops, $control_ops);
 
 		global $pagenow;
 		if (WP_ADMIN) {
@@ -45,6 +48,10 @@ class SP_Image_Widget extends WP_Widget {
 			}
 		}
 		
+	}
+	
+	function loadPluginTextDomain() {
+		load_plugin_textdomain( $this->pluginDomain, false, trailingslashit(basename(dirname(__FILE__))) . 'lang/');
 	}
 	
 	/**
@@ -109,7 +116,7 @@ class SP_Image_Widget extends WP_Widget {
 	function replace_text_in_thitckbox($translated_text, $source_text, $domain) {
 		if ( $this->is_sp_widget_context() ) {
 			if ('Insert into Post' == $source_text) {
-				return __('Insert Into Widget', 'sp_image_widget' );
+				return __('Insert Into Widget', $this->pluginDomain );
 			}
 		}
 		return $translated_text;
@@ -260,14 +267,14 @@ class SP_Image_Widget extends WP_Widget {
 		) );
 		?>
 
-		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', 'sp_image_widget'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', $this->pluginDomain); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['title'])); ?>" /></p>
 
-		<p><label for="<?php echo $this->get_field_id('image'); ?>"><?php _e('Image:', 'sp_image_widget'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('image'); ?>"><?php _e('Image:', $this->pluginDomain); ?></label>
 		<?php
 			$media_upload_iframe_src = "media-upload.php?type=image&widget_id=".$this->id; //NOTE #1: the widget id is added here to allow uploader to only return array if this is used with image widget so that all other uploads are not harmed.
 			$image_upload_iframe_src = apply_filters('image_upload_iframe_src', "$media_upload_iframe_src");
-			$image_title = __(($instance['image'] ? 'Change Image' : 'Add Image'), 'sp_image_widget');
+			$image_title = __(($instance['image'] ? 'Change Image' : 'Add Image'), $this->pluginDomain);
 		?><br />
 		<a href="<?php echo $image_upload_iframe_src; ?>&TB_iframe=true" id="add_image-<?php echo $this->get_field_id('image'); ?>" class="thickbox-image-widget" title='<?php echo $image_title; ?>' onClick="set_active_widget('<?php echo $this->id; ?>');return false;" style="text-decoration:none"><img src='images/media-button-image.gif' alt='<?php echo $image_title; ?>' align="absmiddle" /> <?php echo $image_title; ?></a>
 		<div id="display-<?php echo $this->get_field_id('image'); ?>"><?php 
@@ -290,28 +297,28 @@ class SP_Image_Widget extends WP_Widget {
 		<input id="<?php echo $this->get_field_id('image'); ?>" name="<?php echo $this->get_field_name('image'); ?>" type="hidden" value="<?php echo $instance['image']; ?>" />
 		</p>
 
-		<p><label for="<?php echo $this->get_field_id('description'); ?>"><?php _e('Caption:', 'sp_image_widget'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('description'); ?>"><?php _e('Caption:', $this->pluginDomain); ?></label>
 		<textarea rows="8" class="widefat" id="<?php echo $this->get_field_id('description'); ?>" name="<?php echo $this->get_field_name('description'); ?>"><?php echo format_to_edit($instance['description']); ?></textarea></p>
 
-		<p><label for="<?php echo $this->get_field_id('link'); ?>"><?php _e('Link:', 'sp_image_widget'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('link'); ?>"><?php _e('Link:', $this->pluginDomain); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('link'); ?>" name="<?php echo $this->get_field_name('link'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['link'])); ?>" /><br />
 		<select name="<?php echo $this->get_field_name('linktarget'); ?>" id="<?php echo $this->get_field_id('linktarget'); ?>">
-			<option value="_self"<?php selected( $instance['linktarget'], '_self' ); ?>><?php _e('Stay in Window', 'sp_image_widget'); ?></option>
-			<option value="_blank"<?php selected( $instance['linktarget'], '_blank' ); ?>><?php _e('Open New Window', 'sp_image_widget'); ?></option>
+			<option value="_self"<?php selected( $instance['linktarget'], '_self' ); ?>><?php _e('Stay in Window', $this->pluginDomain); ?></option>
+			<option value="_blank"<?php selected( $instance['linktarget'], '_blank' ); ?>><?php _e('Open New Window', $this->pluginDomain); ?></option>
 		</select></p>
 
-		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', 'sp_image_widget'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', $this->pluginDomain); ?></label>
 		<input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['width'])); ?>" onchange="changeImgWidth('<?php echo $this->id; ?>')" /></p>
 
-		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', 'sp_image_widget'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', $this->pluginDomain); ?></label>
 		<input id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['height'])); ?>" onchange="changeImgHeight('<?php echo $this->id; ?>')" /></p>
 	
-		<p><label for="<?php echo $this->get_field_id('align'); ?>"><?php _e('Align:', 'sp_image_widget'); ?></label>
+		<p><label for="<?php echo $this->get_field_id('align'); ?>"><?php _e('Align:', $this->pluginDomain); ?></label>
 		<select name="<?php echo $this->get_field_name('align'); ?>" id="<?php echo $this->get_field_id('align'); ?>" onchange="changeImgAlign('<?php echo $this->id; ?>')">
-			<option value="none"<?php selected( $instance['align'], 'none' ); ?>><?php _e('none', 'sp_image_widget'); ?></option>
-			<option value="left"<?php selected( $instance['align'], 'left' ); ?>><?php _e('left', 'sp_image_widget'); ?></option>
-			<option value="center"<?php selected( $instance['align'], 'center' ); ?>><?php _e('center', 'sp_image_widget'); ?></option>
-			<option value="right"<?php selected( $instance['align'], 'right' ); ?>><?php _e('right', 'sp_image_widget'); ?></option>
+			<option value="none"<?php selected( $instance['align'], 'none' ); ?>><?php _e('none', $this->pluginDomain); ?></option>
+			<option value="left"<?php selected( $instance['align'], 'left' ); ?>><?php _e('left', $this->pluginDomain); ?></option>
+			<option value="center"<?php selected( $instance['align'], 'center' ); ?>><?php _e('center', $this->pluginDomain); ?></option>
+			<option value="right"<?php selected( $instance['align'], 'right' ); ?>><?php _e('right', $this->pluginDomain); ?></option>
 		</select></p>
 
 <?php
