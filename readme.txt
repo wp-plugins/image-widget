@@ -16,10 +16,11 @@ Simple image widget that uses native Wordpress upload thickbox to add image widg
 * Title and Description
 * Very versatile.  All fields are optional.
 * Upload, link to external image, or select an image from your media collection using the built in thickbox browser.
+* Language Support for German (feel free to contribute other languages)
 
 This plugin is actively supported and we will do our best to help you. In return we simply as 3 things:
 
-1. Help Out. If you see a question on the forum you can help with or have a great idea and want to code it up and submit a patch, that would be just plain awesome and we will shower your with praise. Might even be a good way to get to know us and lead to some paid work if you freelance.
+1. Help Out. If you see a question on the forum you can help with or have a great idea and want to code it up and submit a patch, that would be just plain awesome and we will shower your with praise. Might even be a good way to get to know us and lead to some paid work if you freelance.  Also, we are happy to post translations if you provide them.
 1. Donate - if this is generating enough revenue to support our time it makes all the difference in the world
 https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
 
