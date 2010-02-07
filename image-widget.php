@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Shane and Peter, Inc.
-Version: 3.1.3
+Version: 3.1.4
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -330,7 +330,7 @@ class SP_Image_Widget extends WP_Widget {
 			<option value="right"<?php selected( $instance['align'], 'right' ); ?>><?php _e('right', $this->pluginDomain); ?></option>
 		</select></p>
 
-		<p><label for="<?php echo $this->get_field_id('alt'); ?>"><?php _e('Alt Text:', $this->pluginDomain); ?></label>
+		<p><label for="<?php echo $this->get_field_id('alt'); ?>"><?php _e('Alternate Text:', $this->pluginDomain); ?></label>
 		<input id="<?php echo $this->get_field_id('alt'); ?>" name="<?php echo $this->get_field_name('alt'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['alt'])); ?>" /></p>
 <?php
 	}
