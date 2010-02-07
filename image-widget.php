@@ -42,7 +42,7 @@ class SP_Image_Widget extends WP_Widget {
 				wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js',array('thickbox'), false, true );
 				add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
 			} elseif ( 'media-upload.php' == $pagenow || 'async-upload.php' == $pagenow ) {
-				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 7 );
+				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 8 );
 				add_filter( 'gettext', array( $this, 'replace_text_in_thitckbox' ), 1, 3 );
 				add_filter( 'media_upload_tabs', array( $this, 'media_upload_tabs' ) );
 			}
@@ -135,11 +135,12 @@ class SP_Image_Widget extends WP_Widget {
 	 * @return string javascript array of attachment url and id or just the url
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
-	function image_send_to_editor( $html, $id, $alt, $title, $align, $url, $size ) {
+	function image_send_to_editor( $html, $id, $caption, $title, $align, $url, $size, $alt = '' ) {
 		// Normally, media uploader return an HTML string (in this case, typically a complete image tag surrounded by a caption).
 		// Don't change that; instead, send custom javascript variables back to opener.
 		// Check that this is for the widget. Shouldn't hurt anything if it runs, but let's do it needlessly.
 		if ( $this->is_sp_widget_context() ) {
+			if ($alt=='') $alt = $title;
 			?>
 			<script type="text/javascript">
 				// send image variables back to opener
@@ -147,6 +148,7 @@ class SP_Image_Widget extends WP_Widget {
 				win.IW_html = '<?php echo addslashes($html) ?>';
 				win.IW_img_id = '<?php echo $id ?>';
 				win.IW_alt = '<?php echo addslashes($alt) ?>';
+				win.IW_caption = '<?php echo addslashes($caption) ?>';
 				win.IW_title = '<?php echo addslashes($title) ?>';
 				win.IW_align = '<?php echo $align ?>';
 				win.IW_url = '<?php echo $url ?>';
@@ -191,7 +193,7 @@ class SP_Image_Widget extends WP_Widget {
 				echo '<a class="'.$this->widget_options['classname'].'-image-link" href="'.$instance['link'].'" target="'.$instance['linktarget'].'">';
 			}
 			if ($instance['imageurl']) {
-				echo "<img src=\"{$instance['imageurl']}\" alt=\"{$instance['title']}\" style=\"";
+				echo "<img src=\"{$instance['imageurl']}\" style=\"";
 				if (!empty($instance['width']) && is_numeric($instance['width'])) {
 					echo "max-width: {$instance['width']}px;";
 				}
@@ -201,6 +203,11 @@ class SP_Image_Widget extends WP_Widget {
 				echo "\"";
 				if (!empty($instance['align']) && $instance['align'] != 'none') {
 					echo " class=\"align{$instance['align']}\"";
+				}
+				if (!empty($instance['alt'])) {
+					echo " alt=\"{$instance['alt']}\"";
+				} else {
+					echo " alt=\"{$instance['title']}\"";					
 				}
 				echo " />";
 			}
@@ -241,6 +248,7 @@ class SP_Image_Widget extends WP_Widget {
 		$instance['width'] = $new_instance['width'];
 		$instance['height'] = $new_instance['height'];
 		$instance['align'] = $new_instance['align'];
+		$instance['alt'] = $new_instance['alt'];
 
 		return $instance;
 	}
@@ -263,7 +271,8 @@ class SP_Image_Widget extends WP_Widget {
 			'height' => '', 
 			'image' => '',
 			'imageurl' => '',
-			'align' => ''
+			'align' => '',
+			'alt' => ''
 		) );
 		?>
 
@@ -321,6 +330,8 @@ class SP_Image_Widget extends WP_Widget {
 			<option value="right"<?php selected( $instance['align'], 'right' ); ?>><?php _e('right', $this->pluginDomain); ?></option>
 		</select></p>
 
+		<p><label for="<?php echo $this->get_field_id('alt'); ?>"><?php _e('Alt Text:', $this->pluginDomain); ?></label>
+		<input id="<?php echo $this->get_field_id('alt'); ?>" name="<?php echo $this->get_field_name('alt'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['alt'])); ?>" /></p>
 <?php
 	}
 	

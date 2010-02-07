@@ -22,7 +22,10 @@ function send_to_editor(h) {
 	jQuery( '#widget-'+self.IW_instance+'-title' ).val(self.IW_title);
 
 	// set caption in widget
-	jQuery( '#widget-'+self.IW_instance+'-description' ).val(self.IW_alt);
+	jQuery( '#widget-'+self.IW_instance+'-description' ).val(self.IW_caption);
+
+	// set alt text in widget
+	jQuery( '#widget-'+self.IW_instance+'-alt' ).val(self.IW_alt);
 
 	// set link in widget
 	jQuery( '#widget-'+self.IW_instance+'-link' ).val(self.IW_url);

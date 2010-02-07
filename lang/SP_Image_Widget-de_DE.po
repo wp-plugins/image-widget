@@ -91,3 +91,6 @@ msgstr "zentriert"
 msgid "right"
 msgstr "rechts"
 
+#: image-widget.php:331
+msgid "Alt Text:"
+msgstr "Alternativer Text"
