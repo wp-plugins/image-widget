@@ -21,7 +21,7 @@ add_action('widgets_init', 'load_sp_image_widget');
  **/
 class SP_Image_Widget extends WP_Widget {
 	
-	$pluginDomain = 'sp_image_widget';
+	var $pluginDomain = 'sp_image_widget';
 
 	/**
 	 * SP Image Widget constructor
