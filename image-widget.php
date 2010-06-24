@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Shane and Peter, Inc.
-Version: 3.1.5
+Version: 3.1.6
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -37,6 +37,7 @@ class SP_Image_Widget extends WP_Widget {
 
 		global $pagenow;
 		if (WP_ADMIN) {
+    		add_action( 'admin_init', array( $this, 'fix_async_upload_image' ) );
 			if ( 'widgets.php' == $pagenow ) {
 				wp_enqueue_style( 'thickbox' );
 				wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js',array('thickbox'), false, true );
@@ -48,6 +49,12 @@ class SP_Image_Widget extends WP_Widget {
 			}
 		}
 		
+	}
+	
+	function fix_async_upload_image() {
+		if(isset($_REQUEST['attachment_id'])) {
+			$GLOBALS['post'] = get_post($_REQUEST['attachment_id']);
+		}
 	}
 	
 	function loadPluginTextDomain() {
@@ -73,7 +80,10 @@ class SP_Image_Widget extends WP_Widget {
 			if ($width && $height) {
 				$uploads = wp_upload_dir();
 				$imgpath = $uploads['basedir'].'/'.$attachment['file'];
-				if ($image = image_resize( $imgpath, $width, $height )) {
+				error_log($imgpath);
+				$image = image_resize( $imgpath, $width, $height );
+				if ( $image && !is_wp_error( $image ) ) {
+					error_log( is_wp_error($image) );
 					$image = path_join( dirname($attachment_url), basename($image) );
 				} else {
 					$image = $attachment_url;

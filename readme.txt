@@ -3,8 +3,8 @@ Contributors: Shane & Peter, Inc.
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 2.8
-Tested up to: 2.9.1.1
-Stable tag: 3.1.5
+Tested up to: 3.0
+Stable tag: 3.1.6
 
 == Description ==
 
@@ -43,6 +43,10 @@ If you find any bugs or have any ideas, please mail us.
 Please visit the forum for questions or comments: http://wordpress.org/tags/image-widget/
 
 == Changelog ==
+
+= 3.1.6 =
+
+Fixed Wordpress 3.0 bugs. (Thanks kenvunz)
 
 = 3.1.5 =
 
