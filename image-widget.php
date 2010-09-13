@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Shane and Peter, Inc.
-Version: 3.1.6
+Version: 3.2
 Author URI: http://www.shaneandpeter.com
 */
 
@@ -163,7 +163,6 @@ class SP_Image_Widget extends WP_Widget {
 				win.IW_align = '<?php echo $align ?>';
 				win.IW_url = '<?php echo $url ?>';
 				win.IW_size = '<?php echo $size ?>';
-				//alert("sending variables: id: "+win.IW_img_id+"\n"+"alt: "+win.IW_alt+"\n"+"title: "+win.IW_title+"\n"+"align: "+win.IW_align+"\n"+"url: "+win.IW_url+"\n"+"size: "+win.IW_size);
 			</script>
 			<?php
 		}
@@ -194,43 +193,11 @@ class SP_Image_Widget extends WP_Widget {
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
 	function widget( $args, $instance ) {
-		extract($args);
-		$title = apply_filters('widget_title', empty($instance['title']) ? '' : $instance['title']);
-		echo $before_widget;
-		if ( !empty( $title ) ) { echo $before_title . $title . $after_title; }
-		if (!empty($instance['image'])) {
-			if ($instance['link']) {
-				echo '<a class="'.$this->widget_options['classname'].'-image-link" href="'.$instance['link'].'" target="'.$instance['linktarget'].'">';
-			}
-			if ($instance['imageurl']) {
-				echo "<img src=\"{$instance['imageurl']}\" style=\"";
-				if (!empty($instance['width']) && is_numeric($instance['width'])) {
-					echo "max-width: {$instance['width']}px;";
-				}
-	 			if (!empty($instance['height']) && is_numeric($instance['height'])) {
-					echo "max-height: {$instance['height']}px;";
-				}
-				echo "\"";
-				if (!empty($instance['align']) && $instance['align'] != 'none') {
-					echo " class=\"align{$instance['align']}\"";
-				}
-				if (!empty($instance['alt'])) {
-					echo " alt=\"{$instance['alt']}\"";
-				} else {
-					echo " alt=\"{$instance['title']}\"";					
-				}
-				echo " />";
-			}
-
-			if ($instance['link']) { echo '</a>'; }
-		}
-		if (!empty($instance['description'])) {
-			$text = apply_filters( 'widget_text', $instance['description'] );
-			echo '<div class="'.$this->widget_options['classname'].'-description" >';
-			echo wpautop($text);			
-			echo "</div>";
-		}
-		echo $after_widget;
+		extract( $args );
+		extract( $instance );
+		$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
+		
+		include( $this->getTemplateHierarchy( 'widget' ) );
 	}
 
 	/**
@@ -284,65 +251,7 @@ class SP_Image_Widget extends WP_Widget {
 			'align' => '',
 			'alt' => ''
 		) );
-		?>
-
-		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', $this->pluginDomain); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['title'])); ?>" /></p>
-
-		<p><label for="<?php echo $this->get_field_id('image'); ?>"><?php _e('Image:', $this->pluginDomain); ?></label>
-		<?php
-			$media_upload_iframe_src = "media-upload.php?type=image&widget_id=".$this->id; //NOTE #1: the widget id is added here to allow uploader to only return array if this is used with image widget so that all other uploads are not harmed.
-			$image_upload_iframe_src = apply_filters('image_upload_iframe_src', "$media_upload_iframe_src");
-			$image_title = __(($instance['image'] ? 'Change Image' : 'Add Image'), $this->pluginDomain);
-		?><br />
-		<a href="<?php echo $image_upload_iframe_src; ?>&TB_iframe=true" id="add_image-<?php echo $this->get_field_id('image'); ?>" class="thickbox-image-widget" title='<?php echo $image_title; ?>' onClick="set_active_widget('<?php echo $this->id; ?>');return false;" style="text-decoration:none"><img src='images/media-button-image.gif' alt='<?php echo $image_title; ?>' align="absmiddle" /> <?php echo $image_title; ?></a>
-		<div id="display-<?php echo $this->get_field_id('image'); ?>"><?php 
-		if ($instance['imageurl']) {
-			echo "<img src=\"{$instance['imageurl']}\" alt=\"{$instance['title']}\" style=\"";
-				if ($instance['width'] && is_numeric($instance['width'])) {
-					echo "max-width: {$instance['width']}px;";
-				}
- 				if ($instance['height'] && is_numeric($instance['height'])) {
-					echo "max-height: {$instance['height']}px;";
-				}
-				echo "\"";
-				if (!empty($instance['align']) && $instance['align'] != 'none') {
-					echo " class=\"align{$instance['align']}\"";
-				}
-				echo " />";
-		}
-		?></div>
-		<br clear="all" />
-		<input id="<?php echo $this->get_field_id('image'); ?>" name="<?php echo $this->get_field_name('image'); ?>" type="hidden" value="<?php echo $instance['image']; ?>" />
-		</p>
-
-		<p><label for="<?php echo $this->get_field_id('description'); ?>"><?php _e('Caption:', $this->pluginDomain); ?></label>
-		<textarea rows="8" class="widefat" id="<?php echo $this->get_field_id('description'); ?>" name="<?php echo $this->get_field_name('description'); ?>"><?php echo format_to_edit($instance['description']); ?></textarea></p>
-
-		<p><label for="<?php echo $this->get_field_id('link'); ?>"><?php _e('Link:', $this->pluginDomain); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id('link'); ?>" name="<?php echo $this->get_field_name('link'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['link'])); ?>" /><br />
-		<select name="<?php echo $this->get_field_name('linktarget'); ?>" id="<?php echo $this->get_field_id('linktarget'); ?>">
-			<option value="_self"<?php selected( $instance['linktarget'], '_self' ); ?>><?php _e('Stay in Window', $this->pluginDomain); ?></option>
-			<option value="_blank"<?php selected( $instance['linktarget'], '_blank' ); ?>><?php _e('Open New Window', $this->pluginDomain); ?></option>
-		</select></p>
-
-		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', $this->pluginDomain); ?></label>
-		<input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['width'])); ?>" onchange="changeImgWidth('<?php echo $this->id; ?>')" /></p>
-
-		<p><label for="<?php echo $this->get_field_id('height'); ?>"><?php _e('Height:', $this->pluginDomain); ?></label>
-		<input id="<?php echo $this->get_field_id('height'); ?>" name="<?php echo $this->get_field_name('height'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['height'])); ?>" onchange="changeImgHeight('<?php echo $this->id; ?>')" /></p>
-	
-		<p><label for="<?php echo $this->get_field_id('align'); ?>"><?php _e('Align:', $this->pluginDomain); ?></label>
-		<select name="<?php echo $this->get_field_name('align'); ?>" id="<?php echo $this->get_field_id('align'); ?>" onchange="changeImgAlign('<?php echo $this->id; ?>')">
-			<option value="none"<?php selected( $instance['align'], 'none' ); ?>><?php _e('none', $this->pluginDomain); ?></option>
-			<option value="left"<?php selected( $instance['align'], 'left' ); ?>><?php _e('left', $this->pluginDomain); ?></option>
-			<option value="center"<?php selected( $instance['align'], 'center' ); ?>><?php _e('center', $this->pluginDomain); ?></option>
-			<option value="right"<?php selected( $instance['align'], 'right' ); ?>><?php _e('right', $this->pluginDomain); ?></option>
-		</select></p>
-
-		<p><label for="<?php echo $this->get_field_id('alt'); ?>"><?php _e('Alternate Text:', $this->pluginDomain); ?></label>
-		<input id="<?php echo $this->get_field_id('alt'); ?>" name="<?php echo $this->get_field_name('alt'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['alt'])); ?>" /></p>
-<?php
+		include( $this->getTemplateHierarchy( 'widget-admin' ) );
 	}
 	
 	/**
@@ -361,6 +270,29 @@ class SP_Image_Widget extends WP_Widget {
 			}
 		</style>
 		<?php
+	}
+
+	/**
+	 * Loads theme files in appropriate hierarchy: 1) child theme, 
+	 * 2) parent template, 3) plugin resources. will look in the image-widget/
+	 * directory in a theme and the views/ directory in the plugin
+	 *
+	 * @param string $template template file to search for
+	 * @return template path
+	 * @author Shane & Peter, Inc. (Matt Wiebe)
+	 **/
+
+	public function getTemplateHierarchy($template) {
+		// whether or not .php was added
+		$template_slug = rtrim($template, '.php');
+		$template = $template_slug . '.php';
+		
+		if ( $theme_file = locate_template(array('image-widget/'.$template)) ) {
+			$file = $theme_file;
+		} else {
+			$file = 'views/' . $template;
+		}
+		return apply_filters( 'sp_template_image-widget_'.$template, $file);
 	}
 }
 ?>
