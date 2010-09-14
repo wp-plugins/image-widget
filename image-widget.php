@@ -282,7 +282,7 @@ class SP_Image_Widget extends WP_Widget {
 	 * @author Shane & Peter, Inc. (Matt Wiebe)
 	 **/
 
-	public function getTemplateHierarchy($template) {
+	function getTemplateHierarchy($template) {
 		// whether or not .php was added
 		$template_slug = rtrim($template, '.php');
 		$template = $template_slug . '.php';
