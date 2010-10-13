@@ -44,7 +44,7 @@ class SP_Image_Widget extends WP_Widget {
 				add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
 			} elseif ( 'media-upload.php' == $pagenow || 'async-upload.php' == $pagenow ) {
 				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 8 );
-				add_filter( 'gettext', array( $this, 'replace_text_in_thitckbox' ), 1, 3 );
+				add_filter( 'gettext', array( $this, 'replace_text_in_thickbox' ), 1, 3 );
 				add_filter( 'media_upload_tabs', array( $this, 'media_upload_tabs' ) );
 			}
 		}
@@ -123,7 +123,7 @@ class SP_Image_Widget extends WP_Widget {
 	 * @return void
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
-	function replace_text_in_thitckbox($translated_text, $source_text, $domain) {
+	function replace_text_in_thickbox($translated_text, $source_text, $domain) {
 		if ( $this->is_sp_widget_context() ) {
 			if ('Insert into Post' == $source_text) {
 				return __('Insert Into Widget', $this->pluginDomain );
