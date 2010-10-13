@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 3.0
 Tested up to: 3.0.1
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 
 == Description ==
 
@@ -67,6 +67,10 @@ function my_template_filter($template) {
 
 == Changelog ==
 
+= 3.2.2 =
+
+* Added Portuguese translation courtesy of Gustavo Machado
+
 = 3.2.1 = 
 
 * Fix image widget public declaration bug.
@@ -79,7 +83,7 @@ function my_template_filter($template) {
 
 = 3.1.6 =
 
-Fixed Wordpress 3.0 bugs. (Thanks kenvunz)
+* Fixed Wordpress 3.0 bugs. (Thanks kenvunz)
 
 = 3.1.5 =
 
@@ -123,7 +127,7 @@ Fixed PHP 5 bug.  Removed 'public' declaration. http://wordpress.org/support/top
 
 = 3.0.6 =
 
-Fix crash on insert into post.
+* Fix crash on insert into post.
 
 = 3.0.5 =
 
