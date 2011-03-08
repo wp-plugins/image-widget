@@ -69,11 +69,11 @@ function my_template_filter($template) {
 
 = 3.2.4 =
 
-* Added javascript conflict prevention code thanks to rcain.
+* Added javascript conflict prevention code thanks to @rcain.
 
 = 3.2.3 =
 
-* Added French translation courtesy of Dominique Corbex (Domcox)
+* Added French translation courtesy of Dominique Corbex (@Domcox)
 
 = 3.2.2 =
 
@@ -91,11 +91,11 @@ function my_template_filter($template) {
 
 = 3.1.6 =
 
-* Fixed Wordpress 3.0 bugs. (Thanks kenvunz)
+* Fixed Wordpress 3.0 bugs. (Thanks @kenvunz)
 
 = 3.1.5 =
 
-Fixed PHP 5 bug.  Removed 'public' declaration. http://wordpress.org/support/topic/362167  Thanks mpwalsh8, jleuze, PoLaR5, NancyA and phoney36
+Fixed PHP 5 bug.  Removed 'public' declaration. http://wordpress.org/support/topic/362167  Thanks @mpwalsh8, @jleuze, @PoLaR5, @NancyA and @phoney36
 
 = 3.1.4 =
 
@@ -107,12 +107,12 @@ Fixed PHP 5 bug.  Removed 'public' declaration. http://wordpress.org/support/top
 
 = 3.1.2 =
 
-* Fix bug: XHTML Compliance (thanks HGU for offering a patch and thanks webmasterlistingarts for filing the bug)
+* Fix bug: XHTML Compliance (thanks HGU for offering a patch and thanks @webmasterlistingarts for filing the bug)
 * Replaced `<p>` with `<div>` in description to also improve XHTML compliance.
 
 = 3.1.1 =
 
-* Fix bug: php4 reported error: PHP Parse error:  syntax error, unexpected T_STRING, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or '}' (thanks natashaelaine and massimopaolini)
+* Fix bug: php4 reported error: PHP Parse error:  syntax error, unexpected T_STRING, expecting T_OLD_FUNCTION or T_FUNCTION or T_VAR or '}' (thanks @natashaelaine and @massimopaolini)
 
 = 3.0.10 =
 
@@ -129,8 +129,8 @@ Fixed PHP 5 bug.  Removed 'public' declaration. http://wordpress.org/support/top
 
 = 3.0.7 =
 
-* Fix Dean's Fcuk editor conflict. (Thanks for the report Laurie L_T_G)
-* Fix IE8 bug (Remove extra comma from line 66 of js - thanks for the report reface)
+* Fix Dean's Fcuk editor conflict. (Thanks for the report Laurie @L_T_G)
+* Fix IE8 bug (Remove extra comma from line 66 of js - thanks for the report @reface)
 * Update functions and enqueued scripts to only trigger on widget page.
 
 = 3.0.6 =
@@ -139,7 +139,7 @@ Fixed PHP 5 bug.  Removed 'public' declaration. http://wordpress.org/support/top
 
 = 3.0.5 =
 
-Thank you smurkas, squigie and laurie!!!  Special thanks to Cameron Clark from http://prolifique.com a.k.a capnhairdo for contributing invaluable javascript debugging skills and throwing together some great code.
+Thank you @smurkas, @squigie and @laurie!!!  Special thanks to Cameron Clark from http://prolifique.com a.k.a @capnhairdo for contributing invaluable javascript debugging skills and throwing together some great code.
 
 * PHP4 compatibility
 * Tighter integration with the thickbok uploader attributes including caption, description, alignment, and link
@@ -152,7 +152,7 @@ Thank you smurkas, squigie and laurie!!!  Special thanks to Cameron Clark from h
 
 = 3.0.3 =
 
-* Fixed the broken "Add Image" link (THANK YOU SMURKAS!!!)
+* Fixed the broken "Add Image" link (THANK YOU @SMURKAS!!!)
 
 = 3.0.2 =
 
