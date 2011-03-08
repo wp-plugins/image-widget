@@ -3,8 +3,8 @@ Contributors: Shane & Peter, Inc.
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 3.0
-Tested up to: 3.0.1
-Stable tag: 3.2.3
+Tested up to: 3.1
+Stable tag: 3.2.4
 
 == Description ==
 
@@ -66,6 +66,10 @@ function my_template_filter($template) {
 }`
 
 == Changelog ==
+
+= 3.2.4 =
+
+* Added javascript conflict prevention code thanks to rcain.
 
 = 3.2.3 =
 

@@ -2,7 +2,7 @@ function set_active_widget(instance_id) {
 	self.IW_instance = instance_id;
 }
 
-function send_to_editor(h) {
+function image_widget_send_to_editor(h) {
 	// ignore content returned from media uploader and use variables passed to window instead
 
 	// store attachment id in hidden field
@@ -90,6 +90,7 @@ function changeImgAlign(instance) {
 jQuery(document).ready(function() {
 	jQuery("body").click(function(event) {
 		if (jQuery(event.target).is('a.thickbox-image-widget')) {
+			window.send_to_editor = window.image_widget_send_to_editor;
 			tb_show("Add an Image", event.target.href, false);
 		}
 	});
