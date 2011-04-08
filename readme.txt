@@ -18,6 +18,7 @@ Simple image widget that uses native Wordpress upload thickbox to add image widg
 * Upload, link to external image, or select an image from your media collection using the built in thickbox browser.
 * Language Support for German, Portuguese, Swedish and French (feel free to contribute other languages)
 * Supports override of template so that you can override the template for your theme!
+* Supports HTTPS
 
 This plugin is actively supported and we will do our best to help you. In return we simply as 3 things:
 
@@ -66,6 +67,10 @@ function my_template_filter($template) {
 }`
 
 == Changelog ==
+
+= 3.2.6 =
+
+* Add HTTPS support courtesy of David Paul Ellenwood (DPE@SGS)
 
 = 3.2.5 =
 
@@ -206,7 +211,3 @@ Thank you @smurkas, @squigie and @laurie!!!  Special thanks to Cameron Clark fro
 = Where do I go to file a bug or ask a question? =
 
 Please visit the forum for questions or comments: http://wordpress.org/tags/image-widget/
-
- == Upgrade Notice ==
-
-This upgrade should have no impact on existing installs.

@@ -221,6 +221,9 @@ class SP_Image_Widget extends WP_Widget {
 		$instance['link'] = $new_instance['link'];
 		$instance['image'] = $new_instance['image'];
 		$instance['imageurl'] = $this->get_image_url($new_instance['image'],$new_instance['width'],$new_instance['height']);  // image resizing not working right now
+		if( $_SERVER["HTTPS"] == "on" ) {
+			$instance['imageurl'] = str_replace('http://', 'https://', $instance['imageurl']);
+		}
 		$instance['linktarget'] = $new_instance['linktarget'];
 		$instance['width'] = $new_instance['width'];
 		$instance['height'] = $new_instance['height'];
