@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 3.0
 Tested up to: 3.1
-Stable tag: 3.2.5
+Stable tag: 3.2.7
 
 == Description ==
 
@@ -67,6 +67,11 @@ function my_template_filter($template) {
 }`
 
 == Changelog ==
+
+= 3.2.7 =
+
+* Update javascript to work with the new version of WordPress (thanks Matt Wiebe!!! @mattwiebe)
+* Added Japanese translation courtesy of Takayuki Miyauchi (@miya0001)
 
 = 3.2.6 =
 
