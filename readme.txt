@@ -71,6 +71,7 @@ function my_template_filter($template) {
 = 3.2.8 =
 
 * Minor bugfix courtesy of Takayuki Miyauchi (@miya0001)
+* Polish translation courtesy of Łukasz Kliś
 
 = 3.2.7 =
 
