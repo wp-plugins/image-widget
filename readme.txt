@@ -68,6 +68,10 @@ function my_template_filter($template) {
 
 == Changelog ==
 
+= 3.2.8 =
+
+* Minor bugfix courtesy of Takayuki Miyauchi (@miya0001)
+
 = 3.2.7 =
 
 * Update javascript to work with the new version of WordPress (thanks Matt Wiebe!!! @mattwiebe)

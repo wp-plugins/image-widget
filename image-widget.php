@@ -36,7 +36,7 @@ class SP_Image_Widget extends WP_Widget {
 		$this->WP_Widget('widget_sp_image', __('Image Widget', $this->pluginDomain), $widget_ops, $control_ops);
 
 		global $pagenow;
-		if (WP_ADMIN) {
+		if (defined("WP_ADMIN") && WP_ADMIN) {
     		add_action( 'admin_init', array( $this, 'fix_async_upload_image' ) );
 			if ( 'widgets.php' == $pagenow ) {
 				wp_enqueue_style( 'thickbox' );
