@@ -90,7 +90,7 @@
 	}
 
 	$(document).ready(function() {
-		$("#widgets-right").delegate('a.thickbox-image-widget', 'click', function(event) {
+		$("a.thickbox-image-widget").live('click', function(event) {
 			event.preventDefault();
 			window.send_to_editor = image_widget_send_to_editor;
 			tb_show("Add an Image", event.target.href, false);
