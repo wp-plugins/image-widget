@@ -1,5 +1,5 @@
 === Image Widget ===
-Contributors: Shane & Peter, Inc., mattwiebe
+Contributors: Shane & Peter, Inc., peterchester, mattwiebe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 3.0
