@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Modern Tribe, Inc.
-Version: 3.2.9
+Version: 3.2.10
 Author URI: http://tri.be/
 */
 

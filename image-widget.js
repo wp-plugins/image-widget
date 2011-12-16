@@ -89,8 +89,8 @@
 		);
 	}
 	
-	function imgHandler(ev) {
-		ev.preventDefault();
+	function imgHandler(event) {
+		event.preventDefault();
 		window.send_to_editor = image_widget_send_to_editor;
 		tb_show("Add an Image", event.target.href, false);
 	}
