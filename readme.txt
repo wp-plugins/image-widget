@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 3.2.10
+Stable tag: 3.2.11
 
 == Description ==
 
@@ -67,6 +67,10 @@ function my_template_filter($template) {
 }`
 
 == Changelog ==
+
+= 3.2.11 =
+
+* Yet another minor JS fix to hopefully address issues of lightbox not working
 
 = 3.2.10 =
 

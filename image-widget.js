@@ -97,8 +97,8 @@
 
 	$(document).ready(function() {
 		// Use new style event handling since $.fn.live() will be deprecated
-		if ( typeof $.fn.on === 'function' ) {
-			$("#widgets-right").on("click", "a.thickbox-image-widget", imgHandler);
+		if ( typeof $.fn.on !== 'undefined' ) {
+			$("#wpbody").on("click", ".thickbox-image-widget", imgHandler);
 		}
 		else {
 			$("a.thickbox-image-widget").live('click', imgHandler);
