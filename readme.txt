@@ -59,9 +59,9 @@ The Image Widget comes with a default template for the widget output. If you wou
 
 Edit the new file to your hearts content. Please do not edit the one in the plugin folder as that will cause conflicts when you update the plugin to the latest release.
 
-New in 3.2: You may now also use the "sp_template_image-widget_widget" filter to override the default template behavior for .php template files. Eg: if you wanted widget.php to reside in a folder called my-custom-templates/ and wanted it to be called my-custom-name.php:
+New in 3.2: You may now also use the "sp_template_image-widget_widget.php" filter to override the default template behavior for .php template files. Eg: if you wanted widget.php to reside in a folder called my-custom-templates/ and wanted it to be called my-custom-name.php:
 
-`add_filter('sp_template_image-widget_widget', 'my_template_filter');
+`add_filter('sp_template_image-widget_widget.php', 'my_template_filter');
 function my_template_filter($template) {
 	return get_template_directory() . '/my-custom-templates/my-custom-name.php';
 }`
