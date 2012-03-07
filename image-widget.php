@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 Author: Modern Tribe, Inc.
-Version: 3.2.11
+Version: 3.2.11 patched with working html form uploads by <a href="http://burobjorn.nl">Burobjorn</a>
 Author URI: http://tri.be/
 */
 
@@ -15,12 +15,12 @@ function tribe_load_image_widget() {
 add_action('widgets_init', 'tribe_load_image_widget');
 
 /**
- * SP Image Widget class
+ * Tribe_Image_Widget class
  *
  * @author Shane & Peter, Inc. (Peter Chester)
  **/
 class Tribe_Image_Widget extends WP_Widget {
-	
+
 	var $pluginDomain = 'sp_image_widget';
 
 	/**
@@ -34,33 +34,44 @@ class Tribe_Image_Widget extends WP_Widget {
 		$widget_ops = array( 'classname' => 'widget_sp_image', 'description' => __( 'Showcase a single image with a Title, URL, and a Description', $this->pluginDomain ) );
 		$control_ops = array( 'id_base' => 'widget_sp_image' );
 		$this->WP_Widget('widget_sp_image', __('Image Widget', $this->pluginDomain), $widget_ops, $control_ops);
+		$this->register_scripts_and_styles();
 
 		global $pagenow;
 		if (defined("WP_ADMIN") && WP_ADMIN) {
-    		add_action( 'admin_init', array( $this, 'fix_async_upload_image' ) );
+			add_action( 'admin_init', array( $this, 'fix_async_upload_image' ) );
+
 			if ( 'widgets.php' == $pagenow ) {
 				wp_enqueue_style( 'thickbox' );
-				wp_enqueue_script( $control_ops['id_base'], WP_PLUGIN_URL.'/image-widget/image-widget.js',array('thickbox'), false, true );
+				wp_enqueue_script( 'tribe-image-widget' );
 				add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
-			} elseif ( 'media-upload.php' == $pagenow || 'async-upload.php' == $pagenow ) {
+			}
+			elseif ( 'media-upload.php' == $pagenow || 'async-upload.php' == $pagenow ) {
+				wp_enqueue_script( 'fix-browser-upload' );
 				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 8 );
 				add_filter( 'gettext', array( $this, 'replace_text_in_thickbox' ), 1, 3 );
 				add_filter( 'media_upload_tabs', array( $this, 'media_upload_tabs' ) );
 			}
 		}
-		
+
 	}
-	
+
+	function register_scripts_and_styles() {
+		$dir = plugins_url('/', __FILE__);
+		wp_register_script( 'tribe-image-widget', $dir . 'image-widget.js', array('thickbox'), false, true );
+		wp_register_script( 'fix-browser-upload', $dir . 'image-widget-fix-browser-upload.js', array('jquery'), false, true );
+	}
+
 	function fix_async_upload_image() {
 		if(isset($_REQUEST['attachment_id'])) {
-			$GLOBALS['post'] = get_post($_REQUEST['attachment_id']);
+			$id = (int) $_REQUEST['attachment_id'];
+			$GLOBALS['post'] = get_post( $id );
 		}
 	}
-	
+
 	function loadPluginTextDomain() {
 		load_plugin_textdomain( $this->pluginDomain, false, trailingslashit(basename(dirname(__FILE__))) . 'lang/');
 	}
-	
+
 	/**
 	 * Retrieve resized image URL
 	 *
@@ -71,7 +82,7 @@ class Tribe_Image_Widget extends WP_Widget {
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
 	function get_image_url( $id, $width=false, $height=false ) {
-		
+
 		/**/
 		// Get attachment and resize but return attachment path (needs to return url)
 		$attachment = wp_get_attachment_metadata( $id );
@@ -113,7 +124,7 @@ class Tribe_Image_Widget extends WP_Widget {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Somewhat hacky way of replacing "Insert into Post" with "Insert into Widget"
 	 *
@@ -131,17 +142,17 @@ class Tribe_Image_Widget extends WP_Widget {
 		}
 		return $translated_text;
 	}
-	
+
 	/**
 	 * Filter image_end_to_editor results
 	 *
-	 * @param string $html 
-	 * @param int $id 
-	 * @param string $alt 
-	 * @param string $title 
-	 * @param string $align 
-	 * @param string $url 
-	 * @param array $size 
+	 * @param string $html
+	 * @param int $id
+	 * @param string $alt
+	 * @param string $title
+	 * @param string $align
+	 * @param string $url
+	 * @param array $size
 	 * @return string javascript array of attachment url and id or just the url
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
@@ -172,7 +183,7 @@ class Tribe_Image_Widget extends WP_Widget {
 	/**
 	 * Remove from url tab until that functionality is added to widgets.
 	 *
-	 * @param array $tabs 
+	 * @param array $tabs
 	 * @return void
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
@@ -183,12 +194,12 @@ class Tribe_Image_Widget extends WP_Widget {
 		return $tabs;
 	}
 
-	
+
 	/**
 	 * Widget frontend output
 	 *
-	 * @param array $args 
-	 * @param array $instance 
+	 * @param array $args
+	 * @param array $instance
 	 * @return void
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
@@ -196,7 +207,7 @@ class Tribe_Image_Widget extends WP_Widget {
 		extract( $args );
 		extract( $instance );
 		$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
-		
+
 		include( $this->getTemplateHierarchy( 'widget' ) );
 	}
 
@@ -204,7 +215,7 @@ class Tribe_Image_Widget extends WP_Widget {
 	 * Update widget options
 	 *
 	 * @param object $new_instance Widget Instance
-	 * @param object $old_instance Widget Instance 
+	 * @param object $old_instance Widget Instance
 	 * @return object
 	 * @author Shane & Peter, Inc. (Peter Chester)
 	 */
@@ -242,13 +253,13 @@ class Tribe_Image_Widget extends WP_Widget {
 	 */
 	function form( $instance ) {
 
-		$instance = wp_parse_args( (array) $instance, array( 
-			'title' => '', 
-			'description' => '', 
-			'link' => '', 
-			'linktarget' => '', 
-			'width' => '', 
-			'height' => '', 
+		$instance = wp_parse_args( (array) $instance, array(
+			'title' => '',
+			'description' => '',
+			'link' => '',
+			'linktarget' => '',
+			'width' => '',
+			'height' => '',
 			'image' => '',
 			'imageurl' => '',
 			'align' => '',
@@ -256,7 +267,7 @@ class Tribe_Image_Widget extends WP_Widget {
 		) );
 		include( $this->getTemplateHierarchy( 'widget-admin' ) );
 	}
-	
+
 	/**
 	 * Admin header css
 	 *
@@ -276,20 +287,20 @@ class Tribe_Image_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Loads theme files in appropriate hierarchy: 1) child theme, 
+	 * Loads theme files in appropriate hierarchy: 1) child theme,
 	 * 2) parent template, 3) plugin resources. will look in the image-widget/
 	 * directory in a theme and the views/ directory in the plugin
 	 *
 	 * @param string $template template file to search for
 	 * @return template path
-	 * @author Shane & Peter, Inc. (Matt Wiebe)
+	 * @author Modern Tribe, Inc. (Matt Wiebe)
 	 **/
 
 	function getTemplateHierarchy($template) {
 		// whether or not .php was added
 		$template_slug = rtrim($template, '.php');
 		$template = $template_slug . '.php';
-		
+
 		if ( $theme_file = locate_template(array('image-widget/'.$template)) ) {
 			$file = $theme_file;
 		} else {
@@ -298,4 +309,3 @@ class Tribe_Image_Widget extends WP_Widget {
 		return apply_filters( 'sp_template_image-widget_'.$template, $file);
 	}
 }
-?>
