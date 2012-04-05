@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 3.3.2
+Stable tag: 3.3.3
 
 == Description ==
 
@@ -16,9 +16,17 @@ Simple image widget that uses native Wordpress upload thickbox to add image widg
 * Title and Description
 * Very versatile.  All fields are optional.
 * Upload, link to external image, or select an image from your media collection using the built in thickbox browser.
-* Language Support for German, Portuguese, Swedish and French (feel free to contribute other languages)
 * Supports override of template so that you can override the template for your theme!
 * Supports HTTPS
+
+Supported Languages (feel free to contribute other languages):
+
+* French
+* German
+* Japanese
+* Portuguese
+* Romanian
+* Swedish
 
 This plugin is actively supported and we will do our best to help you. In return we simply as 3 things:
 
@@ -63,6 +71,10 @@ function my_template_filter($template) {
 }`
 
 == Changelog ==
+
+= 3.3.3 =
+
+* Romanian translation courtesy of Alexander Ovsov at Web Geek Science.
 
 = 3.3.2 =
 
