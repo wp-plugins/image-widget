@@ -74,7 +74,7 @@ function my_template_filter($template) {
 
 = 3.3.3 =
 
-* Romanian translation courtesy of Alexander Ovsov at Web Geek Science.
+* Romanian translation courtesy of Alexander Ovsov at Web Geek Science (http://webhostinggeeks.com).
 
 = 3.3.2 =
 
