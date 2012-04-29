@@ -72,6 +72,10 @@ function my_template_filter($template) {
 
 == Changelog ==
 
+= 3.3.4 =
+
+* Add widget description filter $args and $instance ( thanks @jeffreyzinn )
+
 = 3.3.3 =
 
 * Romanian translation courtesy of Alexander Ovsov at Web Geek Science (http://webhostinggeeks.com).
@@ -132,13 +136,13 @@ function my_template_filter($template) {
 
 * Added Portuguese translation courtesy of Gustavo Machado
 
-= 3.2.1 = 
+= 3.2.1 =
 
 * Fix image widget public declaration bug.
 
 = 3.2 =
 
-* Abstract views for widget output and widget admin.  
+* Abstract views for widget output and widget admin.
 * Support theme override of the widget output!  Now you can layout the widget however you'd like.
 * Added filter to override template call.
 
