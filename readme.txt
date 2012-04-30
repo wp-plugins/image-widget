@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 3.3.3
+Stable tag: 3.3.4
 
 == Description ==
 
@@ -225,7 +225,7 @@ Thank you @smurkas, @squigie and @laurie!!!  Special thanks to Cameron Clark fro
 
 = 3.0 =
 
-* Completely remodeled the plugin to use the native wordpress uploader and be compatible with Wordpress 2.8 plugin architecture.
+* Completely remodeled the plugin to use the native WordPress uploader and be compatible with Wordpress 2.8 plugin architecture.
 * Removed externalized widget admin.
 
 = 2.2.2 =
