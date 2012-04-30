@@ -74,7 +74,10 @@ function my_template_filter($template) {
 
 = 3.3.4 =
 
+* Fix javascript bugs in the widget admin UI. ( thanks for filing this @joo-joo )
+* Fix notices in php error log.
 * Add widget description filter $args and $instance ( thanks @jeffreyzinn )
+* Fixed localization and renamed key to 'image-widget'
 
 = 3.3.3 =
 

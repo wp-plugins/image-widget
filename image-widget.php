@@ -23,8 +23,6 @@ add_action('widgets_init', 'tribe_load_image_widget');
  **/
 class Tribe_Image_Widget extends WP_Widget {
 
-	var $pluginDomain = 'sp_image_widget';
-
 	/**
 	 * SP Image Widget constructor
 	 *
@@ -32,33 +30,26 @@ class Tribe_Image_Widget extends WP_Widget {
 	 */
 	function Tribe_Image_Widget() {
 		$this->loadPluginTextDomain();
-		$widget_ops = array( 'classname' => 'widget_sp_image', 'description' => __( 'Showcase a single image with a Title, URL, and a Description', $this->pluginDomain ) );
+		$widget_ops = array( 'classname' => 'widget_sp_image', 'description' => __( 'Showcase a single image with a Title, URL, and a Description', 'image_widget' ) );
 		$control_ops = array( 'id_base' => 'widget_sp_image' );
-		$this->WP_Widget('widget_sp_image', __('Image Widget', $this->pluginDomain), $widget_ops, $control_ops);
-		$this->register_scripts_and_styles();
-
-		global $pagenow;
-		if (defined("WP_ADMIN") && WP_ADMIN) {
-			add_action( 'admin_init', array( $this, 'fix_async_upload_image' ) );
-
-			if ( 'widgets.php' == $pagenow ) {
-				wp_enqueue_style( 'thickbox' );
-				wp_enqueue_script( 'tribe-image-widget' );
-				add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
-			}
-			elseif ( 'media-upload.php' == $pagenow || 'async-upload.php' == $pagenow ) {
-				wp_enqueue_script( 'fix-browser-upload' );
-				add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 8 );
-				add_filter( 'gettext', array( $this, 'replace_text_in_thickbox' ), 1, 3 );
-				add_filter( 'media_upload_tabs', array( $this, 'media_upload_tabs' ) );
-			}
-		}
-
+		$this->WP_Widget('widget_sp_image', __('Image Widget', 'image_widget'), $widget_ops, $control_ops);
+		add_action( 'admin_init', array( $this, 'admin_setup' ) );
 	}
 
-	function register_scripts_and_styles() {
-		$dir = plugins_url('/', __FILE__);
-		wp_register_script( 'tribe-image-widget', $dir . 'image-widget.js', array('jquery','thickbox'), false, true );
+	function admin_setup() {
+		global $pagenow;
+		if ( 'widgets.php' == $pagenow ) {
+			wp_enqueue_style( 'thickbox' );
+			wp_enqueue_script( 'tribe-image-widget', plugins_url('resources/js/image-widget.js', __FILE__), array('thickbox'), FALSE, TRUE );
+			add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
+		}
+		elseif ( 'media-upload.php' == $pagenow || 'async-upload.php' == $pagenow ) {
+			wp_enqueue_script( 'tribe-image-widget-fix-uploader', plugins_url('resources/js/image-widget-upload-fixer.js', __FILE__), array('jquery'), FALSE, TRUE );
+			add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 8 );
+			add_filter( 'gettext', array( $this, 'replace_text_in_thickbox' ), 1, 3 );
+			add_filter( 'media_upload_tabs', array( $this, 'media_upload_tabs' ) );
+		}
+		$this->fix_async_upload_image();
 	}
 
 	function fix_async_upload_image() {
@@ -69,7 +60,7 @@ class Tribe_Image_Widget extends WP_Widget {
 	}
 
 	function loadPluginTextDomain() {
-		load_plugin_textdomain( $this->pluginDomain, false, trailingslashit(basename(dirname(__FILE__))) . 'lang/');
+		load_plugin_textdomain( 'image_widget', false, trailingslashit(basename(dirname(__FILE__))) . 'lang/');
 	}
 
 	/**
@@ -136,7 +127,7 @@ class Tribe_Image_Widget extends WP_Widget {
 	function replace_text_in_thickbox($translated_text, $source_text, $domain) {
 		if ( $this->is_sp_widget_context() ) {
 			if ('Insert into Post' == $source_text) {
-				return __('Insert Into Widget', $this->pluginDomain );
+				return __('Insert Into Widget', 'image_widget' );
 			}
 		}
 		return $translated_text;
@@ -229,7 +220,7 @@ class Tribe_Image_Widget extends WP_Widget {
 		$instance['link'] = $new_instance['link'];
 		$instance['image'] = $new_instance['image'];
 		$instance['imageurl'] = $this->get_image_url($new_instance['image'],$new_instance['width'],$new_instance['height']);  // image resizing not working right now
-		if( $_SERVER["HTTPS"] == "on" ) {
+		if( isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on" ) {
 			$instance['imageurl'] = str_replace('http://', 'https://', $instance['imageurl']);
 		}
 		$instance['linktarget'] = $new_instance['linktarget'];
