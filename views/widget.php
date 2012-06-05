@@ -10,7 +10,7 @@ if ( !defined('ABSPATH') )
 
 echo $before_widget;
 if ( !empty( $title ) ) { echo $before_title . $title . $after_title; }
-if ( !empty( $image ) ) {
+if ( !empty( $imageurl ) ) {
 	if ( $link ) {
 		echo '<a class="'.$this->widget_options['classname'].'-image-link" href="'.esc_url($link).'" target="'.esc_attr($linktarget).'">';
 	}
@@ -32,7 +32,7 @@ if ( !empty( $image ) ) {
 			echo " alt=\"{$alt}\"";
 		} else {
 			$title = esc_attr($title);
-			echo " alt=\"{$title}\"";					
+			echo " alt=\"{$title}\"";
 		}
 		echo " />";
 	}
@@ -42,7 +42,7 @@ if ( !empty( $image ) ) {
 if ( !empty( $description ) ) {
 	$text = apply_filters( 'widget_text', $description, $args, $instance );
 	echo '<div class="'.$this->widget_options['classname'].'-description" >';
-	echo wpautop( $text );			
+	echo wpautop( $text );
 	echo "</div>";
 }
 echo $after_widget;

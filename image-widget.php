@@ -48,6 +48,7 @@ class Tribe_Image_Widget extends WP_Widget {
 			add_filter( 'image_send_to_editor', array( $this,'image_send_to_editor'), 1, 8 );
 			add_filter( 'gettext', array( $this, 'replace_text_in_thickbox' ), 1, 3 );
 			add_filter( 'media_upload_tabs', array( $this, 'media_upload_tabs' ) );
+			add_filter( 'image_widget_image_url', array( $this, 'https_cleanup' ) );
 		}
 		$this->fix_async_upload_image();
 	}
@@ -194,9 +195,11 @@ class Tribe_Image_Widget extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract( $args );
 		extract( $instance );
-		$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
-
-		include( $this->getTemplateHierarchy( 'widget' ) );
+		if ( !empty( $imageurl ) ) {
+			$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
+			$imageurl = apply_filters( 'image_widget_image_url', $imageurl, $args, $instance );
+			include( $this->getTemplateHierarchy( 'widget' ) );
+		}
 	}
 
 	/**
@@ -220,9 +223,6 @@ class Tribe_Image_Widget extends WP_Widget {
 		$instance['link'] = $new_instance['link'];
 		$instance['image'] = $new_instance['image'];
 		$instance['imageurl'] = $this->get_image_url($new_instance['image'],$new_instance['width'],$new_instance['height']);  // image resizing not working right now
-		if( isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on" ) {
-			$instance['imageurl'] = str_replace('http://', 'https://', $instance['imageurl']);
-		}
 		$instance['linktarget'] = $new_instance['linktarget'];
 		$instance['width'] = $new_instance['width'];
 		$instance['height'] = $new_instance['height'];
@@ -270,6 +270,22 @@ class Tribe_Image_Widget extends WP_Widget {
 			}
 		</style>
 		<?php
+	}
+
+	/**
+	 * Adjust the image url on output to account for SSL.
+	 *
+	 * @param string $imageurl
+	 * @return string $imageurl
+	 * @author Modern Tribe, Inc. (Peter Chester)
+	 */
+	function https_cleanup( $imageurl = '' ) {
+		if( isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on" ) {
+			$imageurl = str_replace('http://', 'https://', $imageurl);
+		} else {
+			$imageurl = str_replace('https://', 'http://', $imageurl);
+		}
+		return $imageurl;
 	}
 
 	/**
