@@ -1,10 +1,10 @@
 === Image Widget ===
-Contributors: ModernTribe, peterchester, mattwiebe, Produced by Modern Tribe, Inc.
+Contributors: ModernTribe, peterchester, mattwiebe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, japanese, portuguese, romanian, swedish, dutch, ssl, https
 Requires at least: 3.0
-Tested up to: 3.3.3
-Stable tag: 3.3.4
+Tested up to: 3.4.1
+Stable tag: 3.3.5
 
 == Description ==
 
@@ -75,6 +75,7 @@ function my_template_filter($template) {
 
 = 3.3.5 =
 
+* Fix filtered media library inserts thanks to @miraclemaker as well as @oxyc, @BjornW and innumerable others in the support forum (http://wordpress.org/support/topic/plugin-image-widget-add-image-upload-an-image-select-insert-into-widget-no-image-is-shown)
 * Adjusted HTTPS/SSL handling so that it's only applied in the view. ( thanks @TheFluffyDoneky and @aerobrent )
 * Added a filter for the image url: 'image_widget_image_url'
 * Add Dutch language translation ( thank you Carsten Alsemgeest - presis.nl )
