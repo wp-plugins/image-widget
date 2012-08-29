@@ -1,10 +1,10 @@
 === Image Widget ===
 Contributors: ModernTribe, peterchester, mattwiebe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
-Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, japanese, portuguese, romanian, swedish, dutch, ssl, https
+Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, japanese, portuguese, romanian, swedish, dutch, czech, ssl, https
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 3.3.5
+Stable tag: 3.3.6
 
 == Description ==
 
@@ -28,6 +28,7 @@ Supported Languages (feel free to contribute other languages):
 * Portuguese
 * Romanian
 * Swedish
+* Czech
 
 This plugin is actively supported and we will do our best to help you. In return we simply as 3 things:
 
@@ -72,6 +73,10 @@ function my_template_filter($template) {
 }`
 
 == Changelog ==
+
+= 3.3.6 =
+
+* Czech translation courtesy of Vladislav Musilek at blogísek (http://blog.musilda.cz).
 
 = 3.3.5 =
 
