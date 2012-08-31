@@ -1,7 +1,7 @@
 === Image Widget ===
 Contributors: ModernTribe, peterchester, mattwiebe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
-Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, japanese, portuguese, romanian, swedish, dutch, czech, ssl, https
+Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, japanese, portuguese, romanian, swedish, dutch, czech, ssl, https, widget-only
 Requires at least: 3.0
 Tested up to: 3.4.1
 Stable tag: 3.3.6
