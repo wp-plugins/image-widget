@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: Simple image widget that uses native WordPress upload thickbox to add image widgets to your site.
 Author: Modern Tribe, Inc.
-Version: 3.3.6
+Version: 3.3.7
 Author URI: http://tri.be
 */
 
@@ -197,7 +197,16 @@ class Tribe_Image_Widget extends WP_Widget {
 		extract( $instance );
 		if ( !empty( $imageurl ) ) {
 			$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
-			$imageurl = apply_filters( 'image_widget_image_url', $imageurl, $args, $instance );
+			$description = apply_filters( 'widget_text', $description, $args, $instance );
+			$imageurl = apply_filters( 'image_widget_image_url', esc_url( $imageurl ), $args, $instance );
+			if ( $link ) {
+				$link = apply_filters( 'image_widget_image_link', esc_url( $link ), $args, $instance );
+				$linktarget = apply_filters( 'image_widget_image_link_target', esc_attr( $linktarget ), $args, $instance );
+			}
+			$width = apply_filters( 'image_widget_image_width', $width, $args, $instance );
+			$height = apply_filters( 'image_widget_image_height', $height, $args, $instance );
+			$align = apply_filters( 'image_widget_image_align', esc_attr( $align ), $args, $instance );
+			$alt = apply_filters( 'image_widget_image_alt', esc_attr( $alt ), $args, $instance );
 			include( $this->getTemplateHierarchy( 'widget' ) );
 		}
 	}

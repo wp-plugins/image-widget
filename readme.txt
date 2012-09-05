@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, japanese, portuguese, romanian, swedish, dutch, czech, ssl, https, widget-only
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 3.3.6
+Stable tag: 3.3.7
 
 == Description ==
 
@@ -72,7 +72,58 @@ function my_template_filter($template) {
 	return get_template_directory() . '/my-custom-templates/my-custom-name.php';
 }`
 
+= Filters =
+
+There are a number of filters in the code that will allow you to override data as you see fit. The best way to learn what filters are available is always by simply searching the code for 'apply_filters'. But all the same, here are a few of the more essential filters:
+
+*widget_title*
+
+This is actually a pretty typical filter in widgets and is applied to the widget title.
+
+*widget_text*
+
+Another very typical widget filter that is applied to the description body text. This filter also takes 2 additional arguments for $args and $instance so that you can learn more about the specific widget instance in the process of filtering the content.
+
+*image_widget_image_url*
+
+Filters the url of the image displayed in the widget.
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_link*
+
+Filters the url that the image links to.
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_link_target*
+
+Filters the link target of the image link.
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_width*
+
+Filters the display width of the image. Hint: override this to use this in responsive designs :)
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_height*
+
+Filters the display height of the image.
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_align*
+
+Filters the display alignment of the image.
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_alt*
+
+Filters the alt text of the image.
+Accepts additional $args and $instance arguments.
+
 == Changelog ==
+
+= 3.3.7 =
+
+* Add filters so that people can more easily adjust the output of the widget as per @TCBarrett's request.
 
 = 3.3.6 =
 
