@@ -1,7 +1,7 @@
 === Image Widget ===
 Contributors: ModernTribe, peterchester, mattwiebe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
-Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, japanese, portuguese, romanian, swedish, dutch, czech, ssl, https, widget-only
+Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, italian, japanese, portuguese, romanian, swedish, dutch, czech, ssl, https, widget-only
 Requires at least: 3.0
 Tested up to: 3.4.1
 Stable tag: 3.3.7
@@ -24,6 +24,7 @@ Supported Languages (feel free to contribute other languages):
 * Dutch
 * French
 * German
+* Italian
 * Japanese
 * Portuguese
 * Romanian
@@ -120,6 +121,10 @@ Filters the alt text of the image.
 Accepts additional $args and $instance arguments.
 
 == Changelog ==
+
+= 3.3.8 =
+
+* Added italian translations courtesy of @maxgx
 
 = 3.3.7 =
 
