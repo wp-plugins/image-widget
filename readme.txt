@@ -2,11 +2,13 @@
 Contributors: ModernTribe, peterchester, mattwiebe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
 Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, italian, japanese, portuguese, romanian, swedish, dutch, czech, ssl, https, widget-only
-Requires at least: 3.0
-Tested up to: 3.4.1
+Requires at least: 3.5
+Tested up to: 3.6
 Stable tag: 3.3.7
 
 == Description ==
+
+*NEW: The Image Widget has been UPGRADED to work with WordPress 3.5+!!!*
 
 Simple image widget that uses native Wordpress upload thickbox to add image widgets to your site.
 
@@ -17,7 +19,6 @@ Simple image widget that uses native Wordpress upload thickbox to add image widg
 * Very versatile.  All fields are optional.
 * Upload, link to external image, or select an image from your media collection using the built in thickbox browser.
 * Supports override of template so that you can override the template for your theme!
-* Supports HTTPS/SSL image urls
 
 Supported Languages (feel free to contribute other languages):
 
@@ -54,7 +55,7 @@ Please visit the forum for questions or comments: http://wordpress.org/tags/imag
 = Requirements =
 
 * PHP 5.1 or above
-* WordPress 3.0 or above
+* WordPress 3.5 or above
 
 == Documentation ==
 
@@ -121,6 +122,12 @@ Filters the alt text of the image.
 Accepts additional $args and $instance arguments.
 
 == Changelog ==
+
+= 4.0 =
+
+* Significant upgrades to support the new WordPress media manager.
+* Significant improvements the administrative user interface.
+* Abstracted support for older versions of WordPress so that that we don't break old versions with this upgrade (Though there's no reason you shouldup grade this widget and NOT your WP install! You should always keep WordPress core up to date!)
 
 = 3.3.8 =
 
