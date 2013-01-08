@@ -87,23 +87,26 @@ class Tribe_Image_Widget extends WP_Widget {
 	function widget( $args, $instance ) {
 		extract( $args );
 		$instance = wp_parse_args( (array) $instance, self::get_defaults() );
-		extract( $instance );
-		if ( !empty( $imageurl ) || !empty( $attachment_id ) ) {
-			$title = apply_filters( 'widget_title', empty( $title ) ? '' : $title );
-			$description = apply_filters( 'widget_text', $description, $args, $instance );
-			$link = apply_filters( 'image_widget_image_link', esc_url( $link ), $args, $instance );
-			$linktarget = apply_filters( 'image_widget_image_link_target', esc_attr( $linktarget ), $args, $instance );
-			$width = apply_filters( 'image_widget_image_width', $width, $args, $instance );
-			$height = apply_filters( 'image_widget_image_height', $height, $args, $instance );
-			$align = apply_filters( 'image_widget_image_align', esc_attr( $align ), $args, $instance );
-			$alt = apply_filters( 'image_widget_image_alt', esc_attr( $alt ), $args, $instance );
+		if ( !empty( $instance['imageurl'] ) || !empty( $instance['attachment_id'] ) ) {
+
+			$instance['title'] = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'] );
+			$instance['description'] = apply_filters( 'widget_text', $instance['description'], $args, $instance );
+			$instance['link'] = apply_filters( 'image_widget_image_link', esc_url( $instance['link'] ), $args, $instance );
+			$instance['linktarget'] = apply_filters( 'image_widget_image_link_target', esc_attr( $instance['linktarget'] ), $args, $instance );
+			$instance['width'] = apply_filters( 'image_widget_image_width', abs( $instance['width'] ), $args, $instance );
+			$instance['height'] = apply_filters( 'image_widget_image_height', abs( $instance['height'] ), $args, $instance );
+			$instance['align'] = apply_filters( 'image_widget_image_align', esc_attr( $instance['align'] ), $args, $instance );
+			$instance['alt'] = apply_filters( 'image_widget_image_alt', esc_attr( $instance['alt'] ), $args, $instance );
 
 			if ( !defined( 'IMAGE_WIDGET_COMPATIBILITY_TEST' ) ) {
-				$attachment_id = ( $attachment_id > 0 ) ? $attachment_id : $image;
-				$attachment_id = apply_filters( 'image_widget_image_attachment_id', abs( $attachment_id ), $args, $instance );
-				$size = apply_filters( 'image_widget_image_size', $size, $args, $instance );
+				$instance['attachment_id'] = ( $instance['attachment_id'] > 0 ) ? $instance['attachment_id'] : $instance['image'];
+				$instance['attachment_id'] = apply_filters( 'image_widget_image_attachment_id', abs( $instance['attachment_id'] ), $args, $instance );
+				$instance['size'] = apply_filters( 'image_widget_image_size', esc_attr( $instance['size'] ), $args, $instance );
 			}
-			$imageurl = apply_filters( 'image_widget_image_url', esc_url( $imageurl ), $args, $instance );
+			$instance['imageurl'] = apply_filters( 'image_widget_image_url', esc_url( $instance['imageurl'] ), $args, $instance );
+
+			// No longer using extracted vars. This is here for backwards compatibility.
+			extract( $instance );
 
 			include( $this->getTemplateHierarchy( 'widget' ) );
 		}
@@ -268,9 +271,8 @@ class Tribe_Image_Widget extends WP_Widget {
 		}
 		$attr = apply_filters( 'image_widget_image_attributes', $attr, $instance );
 
-		if ( abs( $instance['attachment_id'] ) > 0 ) {
-			$output .= wp_get_attachment_image($instance['attachment_id'], $size, false, $attr);
-		} else {
+		// If there is an imageurl, use it to render the image. Eventually we should kill this and simply rely on attachment_ids.
+		if ( !empty( $instance['imageurl'] ) ) {
 			// If all we have is an image src url we can still render an image.
 			$attr['src'] = $instance['imageurl'];
 			$hwstring = image_hwstring( $instance['width'], $instance['height'] );
@@ -279,6 +281,8 @@ class Tribe_Image_Widget extends WP_Widget {
 				$output .= " $name=" . '"' . $value . '"';
 			}
 			$output .= ' />';
+		} elseif( abs( $instance['attachment_id'] ) > 0 ) {
+			$output .= wp_get_attachment_image($instance['attachment_id'], $size, false, $attr);
 		}
 
 		if ( $include_link && !empty( $instance['link'] ) ) {
