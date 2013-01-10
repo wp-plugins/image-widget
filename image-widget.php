@@ -72,7 +72,7 @@ class Tribe_Image_Widget extends WP_Widget {
 		wp_enqueue_script( 'tribe-image-widget', plugins_url('resources/js/image-widget.js', __FILE__), array( 'jquery', 'media-upload', 'media-views' ) );
 
 		wp_localize_script( 'tribe-image-widget', 'TribeImageWidget', array(
-			'frame_title' => __( 'Select and Image', 'image_widget' ),
+			'frame_title' => __( 'Select an Image', 'image_widget' ),
 			'button_title' => __( 'Insert Into Widget', 'image_widget' ),
 		) );
 	}
