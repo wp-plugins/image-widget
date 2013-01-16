@@ -10,7 +10,7 @@ if ( !defined('ABSPATH') )
 	$id_prefix = $this->get_field_id('');
 ?>
 <div class="uploader">
-	<input type="submit" class="button" name="<?php echo $this->get_field_name('uploader_button'); ?>" id="<?php echo $this->get_field_id('uploader_button'); ?>" value="<?php _e('Upload', 'tribe-upload-tester'); ?>" onclick="imageWidget.uploader( '<?php echo $this->id; ?>', '<?php echo $id_prefix; ?>' ); return false;" />
+	<input type="submit" class="button" name="<?php echo $this->get_field_name('uploader_button'); ?>" id="<?php echo $this->get_field_id('uploader_button'); ?>" value="<?php _e('Select an Image', 'tribe-upload-tester'); ?>" onclick="imageWidget.uploader( '<?php echo $this->id; ?>', '<?php echo $id_prefix; ?>' ); return false;" />
 	<div class="tribe_preview" id="<?php echo $this->get_field_id('preview'); ?>">
 		<?php echo $this->get_image_html($instance, false); ?>
 	</div>
@@ -61,17 +61,7 @@ if ( !defined('ABSPATH') )
 	</div>
 	<div id="<?php echo $this->get_field_id('custom_size_fields'); ?>" <?php if ( empty($instance['size']) || $instance['size']!=self::CUSTOM_IMAGE_SIZE_SLUG ) { ?>style="display:none;"<?php } ?>>
 
-		<?php
-			$aspect_ratio = '';
-			if ( !empty($instance['attachment_id']) ) {
-				$image_details = wp_get_attachment_image_src( $instance['attachment_id'], 'full' );
-				error_log( __FUNCTION__ . ' : $image_details = ' . print_r( $image_details, TRUE ) );
-				if ($image_details) {
-					$aspect_ratio = $image_details[1]/$image_details[2];
-				}
-			}
-		?>
-		<input type="hidden" id="<?php echo $this->get_field_id('aspect_ratio'); ?>" name="<?php echo $this->get_field_name('aspect_ratio'); ?>" value="<?php echo $aspect_ratio; ?>" />
+		<input type="hidden" id="<?php echo $this->get_field_id('aspect_ratio'); ?>" name="<?php echo $this->get_field_name('aspect_ratio'); ?>" value="<?php echo $this->get_image_aspect_ratio( $instance ); ?>" />
 
 		<p><label for="<?php echo $this->get_field_id('width'); ?>"><?php _e('Width:', 'image_widget'); ?></label>
 		<input id="<?php echo $this->get_field_id('width'); ?>" name="<?php echo $this->get_field_name('width'); ?>" type="text" value="<?php echo esc_attr(strip_tags($instance['width'])); ?>" onchange="imageWidget.changeImgWidth( '<?php echo $this->id; ?>', '<?php echo $id_prefix; ?>' )" size="3" /></p>
@@ -82,7 +72,7 @@ if ( !defined('ABSPATH') )
 	</div>
 
 	<p><label for="<?php echo $this->get_field_id('align'); ?>"><?php _e('Align:', 'image_widget'); ?></label>
-	<select name="<?php echo $this->get_field_name('align'); ?>" id="<?php echo $this->get_field_id('align'); ?>" onchange="imageWidget.changeImgAlign( '<?php echo $this->id; ?>', '<?php echo $id_prefix; ?>' )">
+	<select name="<?php echo $this->get_field_name('align'); ?>" id="<?php echo $this->get_field_id('align'); ?>">
 		<option value="none"<?php selected( $instance['align'], 'none' ); ?>><?php _e('none', 'image_widget'); ?></option>
 		<option value="left"<?php selected( $instance['align'], 'left' ); ?>><?php _e('left', 'image_widget'); ?></option>
 		<option value="center"<?php selected( $instance['align'], 'center' ); ?>><?php _e('center', 'image_widget'); ?></option>

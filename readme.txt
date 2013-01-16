@@ -86,20 +86,16 @@ This is actually a pretty typical filter in widgets and is applied to the widget
 
 Another very typical widget filter that is applied to the description body text. This filter also takes 2 additional arguments for $args and $instance so that you can learn more about the specific widget instance in the process of filtering the content.
 
+*image_widget_image_attachment_id*
+
+Filters the attachment id of the image.
+Accepts additional $args and $instance arguments.
+
 *image_widget_image_url*
 
 Filters the url of the image displayed in the widget.
 Accepts additional $args and $instance arguments.
-
-*image_widget_image_link*
-
-Filters the url that the image links to.
-Accepts additional $args and $instance arguments.
-
-*image_widget_image_link_target*
-
-Filters the link target of the image link.
-Accepts additional $args and $instance arguments.
+THIS IS DEPRECATED AND WILL EVENTUALLY BE DELETED
 
 *image_widget_image_width*
 
@@ -109,6 +105,12 @@ Accepts additional $args and $instance arguments.
 *image_widget_image_height*
 
 Filters the display height of the image.
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_size*
+
+Filters the selected image 'size' corresponding to WordPress registered sizes.
+If this is set to 'tribe_image_widget_custom' then the width and height are used instead.
 Accepts additional $args and $instance arguments.
 
 *image_widget_image_align*
@@ -121,13 +123,34 @@ Accepts additional $args and $instance arguments.
 Filters the alt text of the image.
 Accepts additional $args and $instance arguments.
 
+*image_widget_image_link*
+
+Filters the url that the image links to.
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_link_target*
+
+Filters the link target of the image link.
+Accepts additional $args and $instance arguments.
+
+*image_widget_image_attributes*
+
+Filters a list of image attributes used in the image output. Similar to 'wp_get_attachment_image_attributes'
+Accepts $instance arguments
+
+*image_widget_link_attributes*
+
+Filters a list of attributes used in the image link. Similar to 'wp_get_attachment_image_attributes'
+Accepts $instance arguments
+
 == Changelog ==
 
 = 4.0 =
 
-* Significant upgrades to support the new WordPress media manager.
+* Significant upgrades to support the new WordPress media manager (Thank you @kyleunzicker, @dancameron, @dudekpj, @JakePT)
 * Significant improvements the administrative user interface.
-* Abstracted support for older versions of WordPress so that that we don't break old versions with this upgrade (Though there's no reason you shouldup grade this widget and NOT your WP install! You should always keep WordPress core up to date!)
+* Abstracted support for older versions of WordPress so that that we don't break old versions with this upgrade (Though there's no reason you should up grade this widget and NOT your WP install! You should always keep WordPress core up to date!)
+* Added 'image_widget_link_attributes' filter to easily process link attributes and to default to having the link 'title' be the 'alt' or 'title' content. (Thank you @ZeroGravity, @pixelyzed, and @javiandgo)
 
 = 3.3.8 =
 

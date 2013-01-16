@@ -141,7 +141,7 @@ class Tribe_Image_Widget extends WP_Widget {
 		$instance['align'] = $new_instance['align'];
 		$instance['alt'] = $new_instance['alt'];
 
-			// Reverse compatibility with $image, now called $attachement_id
+		// Reverse compatibility with $image, now called $attachement_id
 		if ( !defined( 'IMAGE_WIDGET_COMPATIBILITY_TEST' ) && $new_instance['attachment_id'] > 0 ) {
 			$instance['attachment_id'] = abs( $new_instance['attachment_id'] );
 		} elseif ( $new_instance['image'] > 0 ) {
@@ -151,6 +151,8 @@ class Tribe_Image_Widget extends WP_Widget {
 			}
 		}
 		$instance['imageurl'] = $new_instance['imageurl']; // deprecated
+
+		$instance['aspect_ratio'] = $this->get_image_aspect_ratio( $instance );
 
 		return $instance;
 	}
@@ -190,6 +192,7 @@ class Tribe_Image_Widget extends WP_Widget {
 		}
 		.tribe_preview {
 			overflow: hidden;
+			max-height: 300px;
 		}
 		.tribe_preview img {
 			margin: 10px 0;
@@ -243,14 +246,36 @@ class Tribe_Image_Widget extends WP_Widget {
 		$output = '';
 
 		if ( $include_link && !empty( $instance['link'] ) ) {
-			$output = '<a class="'.$this->widget_options['classname'].'-image-link" href="'.$instance['link'].'" target="'.$instance['linktarget'].'">';
+			$attr = array(
+				'href' => $instance['link'],
+				'target' => $instance['linktarget'],
+				'class' => 	$this->widget_options['classname'].'-image-link',
+				'title' => ( !empty( $instance['alt'] ) ) ? $instance['alt'] : $instance['title'],
+			);
+			$attr = apply_filters('image_widget_link_attributes', $attr, $instance );
+			$attr = array_map( 'esc_attr', $attr );
+			$output = '<a';
+			foreach ( $attr as $name => $value ) {
+				$output .= sprintf( ' %s="%s"', $name, $value );
+			}
+			$output .= '>';
 		}
 
 		$size = $this->get_image_size( $instance );
 		if ( is_array( $size ) ) {
 			$instance['width'] = $size[0];
 			$instance['height'] = $size[1];
+		} elseif ( !empty( $instance['attachment_id'] ) ) {
+			//$instance['width'] = $instance['height'] = 0;
+			$image_details = wp_get_attachment_image_src( $instance['attachment_id'], $size );
+			if ($image_details) {
+				$instance['imageurl'] = $image_details[0];
+				$instance['width'] = $image_details[1];
+				$instance['height'] = $image_details[2];
+			}
 		}
+		$instance['width'] = abs( $instance['width'] );
+		$instance['height'] = abs( $instance['height'] );
 
 		$attr = array();
 		$attr['alt'] = $instance['title'];
@@ -260,10 +285,10 @@ class Tribe_Image_Widget extends WP_Widget {
 			$attr['class'] = 'attachment-'.$size;
 		}
 		$attr['style'] = '';
-		if ($instance['width'] && is_numeric($instance['width'])) {
+		if (!empty($instance['width'])) {
 			$attr['style'] .= "max-width: {$instance['width']}px;";
 		}
-		if ($instance['height'] && is_numeric($instance['height'])) {
+		if (!empty($instance['height'])) {
 			$attr['style'] .= "max-height: {$instance['height']}px;";
 		}
 		if (!empty($instance['align']) && $instance['align'] != 'none') {
@@ -275,10 +300,11 @@ class Tribe_Image_Widget extends WP_Widget {
 		if ( !empty( $instance['imageurl'] ) ) {
 			// If all we have is an image src url we can still render an image.
 			$attr['src'] = $instance['imageurl'];
+			$attr = array_map( 'esc_attr', $attr );
 			$hwstring = image_hwstring( $instance['width'], $instance['height'] );
 			$output .= rtrim("<img $hwstring");
 			foreach ( $attr as $name => $value ) {
-				$output .= " $name=" . '"' . $value . '"';
+				$output .= sprintf( ' %s="%s"', $name, $value );
 			}
 			$output .= ' />';
 		} elseif( abs( $instance['attachment_id'] ) > 0 ) {
@@ -307,6 +333,26 @@ class Tribe_Image_Widget extends WP_Widget {
 			$size = 'full';
 		}
 		return $size;
+	}
+
+	/**
+	 * Establish the aspect ratio of the image.
+	 *
+	 * @param $instance
+	 * @return float|number
+	 */
+	private function get_image_aspect_ratio( $instance ) {
+		if ( !empty( $instance['aspect_ratio'] ) ) {
+			return abs( $instance['aspect_ratio'] );
+		} else {
+			$attachment_id = ( !empty($instance['attachment_id']) ) ? $instance['attachment_id'] : $instance['image'];
+			if ( !empty($attachment_id) ) {
+				$image_details = wp_get_attachment_image_src( $attachment_id, 'full' );
+				if ($image_details) {
+					return ( $image_details[1]/$image_details[2] );
+				}
+			}
+		}
 	}
 
 	/**
