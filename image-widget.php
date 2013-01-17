@@ -9,12 +9,8 @@ Author URI: http://tri.be
 
 
 TODO: Add documentation where needed
-TODO: Make sure we are providing hooks and filters wherever needed - especially for the image rendering code.
-TODO: Make sure that functional code is abstracted from template code.
 TODO: Audit translations?
-TODO: Update readme filters list...
 TODO: Update screenshots
-TODO: Have a code review done?
 TODO: Press release / pr / announcements???
 
 */
@@ -53,6 +49,16 @@ class Tribe_Image_Widget extends WP_Widget {
 			add_action( 'sidebar_admin_setup', array( $this, 'admin_setup' ) );
 		}
 		add_action( 'admin_head-widgets.php', array( $this, 'admin_head' ) );
+
+		add_action( 'plugin_row_meta', array( $this, 'plugin_row_meta' ),10 ,2 );
+	}
+
+	public function plugin_row_meta( $meta, $file ) {
+		error_log( __FUNCTION__ . ' : $file = ' . print_r( $file, TRUE ) );
+		if ( $file == plugin_basename( dirname(__FILE__).'/image-widget.php' ) ) {
+			$meta[] = '<span class="tribe-test">'.sprintf(__('Check out our other <a href="%s" target="_blank">plugins</a> including our <a href="%s" target="_blank">Events Calendar Pro</a>!', 'image-widget'),'http://tri.be/products/?source=image-widget','http://tri.be/wordpress-events-calendar-pro/?source=image-widget').'</span>';
+		}
+		return $meta;
 	}
 
 	/**
