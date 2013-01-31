@@ -354,7 +354,7 @@ Thank you @smurkas, @squigie and @laurie!!!  Special thanks to Cameron Clark fro
 == Screenshots ==
 
 1. Image Widget admin screen.
-1. Thickbox uploader for the Image Widget
+1. Media manager integration.
 1. Image Widget on the front of a plain Wordpress install.
 
 == Frequently Asked Questions ==

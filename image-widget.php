@@ -6,9 +6,6 @@ Description: Simple image widget that uses native WordPress upload thickbox to a
 Author: Modern Tribe, Inc.
 Version: 4.0
 Author URI: http://tri.be
-
-TODO: Audit translations?
-TODO: Update screenshots
 */
 
 // Block direct requests
