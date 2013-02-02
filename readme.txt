@@ -1,10 +1,10 @@
 === Image Widget ===
 Contributors: ModernTribe, peterchester, mattwiebe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
-Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, french, german, italian, japanese, portuguese, romanian, swedish, dutch, czech, ssl, https, widget-only
+Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, italian, swedish, dutch, ssl, https, widget-only
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 3.3.7
+Stable tag: 4.0
 
 == Description ==
 
@@ -20,24 +20,22 @@ Simple image widget that uses native Wordpress upload thickbox to add image widg
 * Upload, link to external image, or select an image from your media collection using the built in thickbox browser.
 * Supports override of template so that you can override the template for your theme!
 
-Supported Languages (feel free to contribute other languages):
+Supported Languages:
 
 * Dutch
-* French
-* German
 * Italian
-* Japanese
-* Portuguese
-* Romanian
 * Swedish
-* Czech
+
+If you would like your own language to be supported, please contribute translations here:
+
+http://wordpress.org/support/topic/image-widget-40-translations-needed-2
 
 This plugin is actively supported and we will do our best to help you. In return we simply as 3 things:
 
 1. Help Out. If you see a question on the forum you can help with or have a great idea and want to code it up and submit a patch, that would be just plain awesome and we will shower your with praise. Might even be a good way to get to know us and lead to some paid work if you freelance.  Also, we are happy to post translations if you provide them.
 1. Donate - if this is generating enough revenue to support our time it makes all the difference in the world
 https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
-1. Support us by buying our Premium plugins. In particular, check out our Events Calendar Pro http://tri.be/wordpress-events-calendar-pro/
+1. Support us by buying our Premium plugins. In particular, check out our Events Calendar Pro http://tri.be/wordpress-events-calendar-pro/?src=imagewidget
 
 == Installation ==
 
@@ -151,6 +149,10 @@ Accepts $instance arguments
 * Significant improvements the administrative user interface.
 * Abstracted support for older versions of WordPress so that that we don't break old versions with this upgrade (Though there's no reason you should up grade this widget and NOT your WP install! You should always keep WordPress core up to date!)
 * Added 'image_widget_link_attributes' filter to easily process link attributes and to default to having the link 'title' be the 'alt' or 'title' content. (Thank you @ZeroGravity, @pixelyzed, and @javiandgo)
+* Updated Translations
+** Swedish (Tomas Lindhoff <tomas@xhost.se>)
+** Dutch (Presis <contact@presis.nl>)
+** Italian (@maxgx)
 
 = 3.3.8 =
 
@@ -350,6 +352,16 @@ Thank you @smurkas, @squigie and @laurie!!!  Special thanks to Cameron Clark fro
 * Multi widget support
 * WP 2.7.1 Compatibility
 * Class encapsulation
+
+== Upgrade Notice ==
+
+= 4.0 =
+
+Please be advised that this is a significant upgrade. You should definitely back up your database before updating in case your existing image widgets have any problems.
+
+Also, several languages will no longer be supported until new translations are submitted. Currently, we have support for Italian, Dutch, and Swedish. If you would like to contribute your own language files, please post links here:
+
+http://wordpress.org/support/topic/image-widget-40-translations-needed-2
 
 == Screenshots ==
 
