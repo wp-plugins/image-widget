@@ -1,10 +1,10 @@
 === Image Widget ===
 Contributors: ModernTribe, peterchester, mattwiebe
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4BSPTNFFY6AL6
-Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, italian, swedish, dutch, ssl, https, widget-only
+Tags: widget, image, ad, banner, simple, upload, sidebar, admin, thickbox, resize, brazilian portuguese, dutch, italian, spanish, swedish, widget-only
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 4.0
+Stable tag: 4.0.1
 
 == Description ==
 
@@ -22,8 +22,10 @@ Simple image widget that uses native Wordpress upload thickbox to add image widg
 
 Supported Languages:
 
+* Brazilian Portuguese
 * Dutch
 * Italian
+* Spanish
 * Swedish
 
 If you would like your own language to be supported, please contribute translations here:
@@ -142,6 +144,13 @@ Filters a list of attributes used in the image link. Similar to 'wp_get_attachme
 Accepts $instance arguments
 
 == Changelog ==
+
+= 4.0.1 =
+
+Language updates:
+
+* Brazilian Portuguese (Thank you @guhemama)
+* Spanish (Thank you @javiandgo)
 
 = 4.0 =
 
