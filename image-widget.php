@@ -4,7 +4,7 @@ Plugin Name: Image Widget
 Plugin URI: http://wordpress.org/extend/plugins/image-widget/
 Description: A simple image widget that uses the native WordPress media manager to add image widgets to your site.
 Author: Modern Tribe, Inc.
-Version: 4.0.9
+Version: 4.1
 Author URI: http://m.tri.be/26
 */
 
@@ -23,7 +23,7 @@ add_action('widgets_init', 'tribe_load_image_widget');
  **/
 class Tribe_Image_Widget extends WP_Widget {
 
-	const VERSION = '4.0.9';
+	const VERSION = '4.1';
 
 	const CUSTOM_IMAGE_SIZE_SLUG = 'tribe_image_widget_custom';
 
@@ -298,10 +298,8 @@ class Tribe_Image_Widget extends WP_Widget {
 		}
 		$attr = apply_filters( 'image_widget_image_attributes', $attr, $instance );
 
-		// If there's an attachment ID, rely on that first. If there is an imageurl, use it to render the image. Eventually we should kill this and simply rely on attachment_ids.
-		if( abs( $instance['attachment_id'] ) > 0 ) {
-			$output .= wp_get_attachment_image($instance['attachment_id'], $size, false, $attr);
-		} elseif ( !empty( $instance['imageurl'] ) ) {
+		// If there is an imageurl, use it to render the image. Eventually we should kill this and simply rely on attachment_ids.
+		if ( !empty( $instance['imageurl'] ) ) {
 			// If all we have is an image src url we can still render an image.
 			$attr['src'] = $instance['imageurl'];
 			$attr = array_map( 'esc_attr', $attr );
@@ -311,6 +309,8 @@ class Tribe_Image_Widget extends WP_Widget {
 				$output .= sprintf( ' %s="%s"', $name, $value );
 			}
 			$output .= ' />';
+		} elseif( abs( $instance['attachment_id'] ) > 0 ) {
+			$output .= wp_get_attachment_image($instance['attachment_id'], $size, false, $attr);
 		}
 
 		if ( $include_link && !empty( $instance['link'] ) ) {
