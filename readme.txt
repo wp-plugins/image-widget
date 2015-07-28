@@ -173,6 +173,10 @@ For more info on the philosophy here, check out our blog post: http://tri.be/def
 
 == Changelog ==
 
+= 4.1.2 =
+
+* Tweak - Added support for an id attribute on links (Props to amyh for the work on this!)
+
 = 4.1.1 =
 
 * Tweak - Retiring the use of PHP 4 style constructors
